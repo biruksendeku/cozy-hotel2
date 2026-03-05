@@ -1,0 +1,489 @@
+/* ===== REVENUE PAGE STYLES ===== */
+:root {
+    --primary: #FF6B6B;
+    --primary-dark: #FF5252;
+    --secondary: #4ECDC4;
+    --dark: #2D3436;
+    --light: #F9F9F9;
+    --gray: #636E72;
+    --gray-light: #DFE6E9;
+    --white: #FFFFFF;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --radius: 16px;
+    --transition: all 0.3s ease;
+}
+
+.header {
+	display: none; 
+}
+
+/* Revenue Analytics Section */
+.revenue-analytics-section {
+    padding: 30px 0 50px;
+    background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+}
+
+.analytics-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.analytics-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.analytics-title i {
+    color: var(--primary);
+}
+
+.analytics-subtitle {
+    color: var(--gray);
+    font-size: 15px;
+}
+
+/* Period Selector */
+.period-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.period-btn {
+    padding: 12px 25px;
+    border-radius: 50px;
+    background: var(--white);
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    border: 2px solid var(--gray-light);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.period-btn i {
+    font-size: 14px;
+}
+
+.period-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.period-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+    border-color: transparent;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+}
+
+/* Revenue Grid */
+.revenue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.revenue-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 1px solid var(--gray-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.revenue-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.revenue-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.revenue-card:hover::before {
+    opacity: 1;
+}
+
+.revenue-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.revenue-card-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 0;
+}
+
+.revenue-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: var(--white);
+    flex-shrink: 0;
+}
+
+.daily-icon { background: linear-gradient(135deg, #FFD93E, #FFB347); }
+.weekly-icon { background: linear-gradient(135deg, #6C5CE7, #A363D9); }
+.monthly-icon { background: linear-gradient(135deg, #00B894, #00CEC9); }
+.yearly-icon { background: linear-gradient(135deg, #E17055, #D63031); }
+
+.revenue-period {
+    font-size: 12px;
+    color: var(--gray);
+    display: block;
+    margin-top: 3px;
+}
+
+.revenue-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.revenue-comparison {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    background: var(--light);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.comparison-item {
+    text-align: center;
+    flex: 1;
+}
+
+.comparison-label {
+    display: block;
+    font-size: 12px;
+    color: var(--gray);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.comparison-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 5px;
+    line-height: 1.2;
+}
+
+.comparison-orders {
+    font-size: 12px;
+    color: var(--gray);
+}
+
+.comparison-divider {
+    display: flex;
+    align-items: center;
+    color: var(--gray-light);
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+.revenue-change {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.revenue-change.positive {
+    background: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.revenue-change.negative {
+    background: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+}
+
+.revenue-change i {
+    font-size: 14px;
+}
+
+/* Revenue Table */
+.revenue-table-container {
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 40px;
+}
+
+.period-indicator {
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 10px;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: capitalize;
+}
+
+.revenue-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.revenue-table thead {
+    background: var(--light);
+}
+
+.revenue-table th {
+    padding: 20px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--dark);
+    border-bottom: 2px solid var(--gray-light);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.revenue-table tbody tr {
+    border-bottom: 1px solid var(--gray-light);
+    transition: var(--transition);
+}
+
+.revenue-table tbody tr:hover {
+    background: rgba(255, 107, 107, 0.03);
+}
+
+.revenue-table td {
+    padding: 20px;
+    vertical-align: middle;
+}
+
+.period-cell {
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.orders-count {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.revenue-amount {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--primary);
+}
+
+.avg-order {
+    font-size: 14px;
+    color: var(--gray);
+}
+
+.growth-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.growth-badge.positive {
+    background: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+}
+
+.growth-badge.negative {
+    background: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+}
+
+.growth-badge.neutral {
+    background: var(--light);
+    color: var(--gray);
+}
+
+/* Insights Section */
+.insights-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.insights-card {
+    background: linear-gradient(135deg, var(--white), var(--light));
+    border-radius: var(--radius);
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gray-light);
+    transition: var(--transition);
+}
+
+.insights-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.insights-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--white);
+    flex-shrink: 0;
+}
+
+.insights-content {
+    flex: 1;
+}
+
+.insights-content h4 {
+    font-size: 16px;
+    color: var(--gray);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.insights-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.insights-value i {
+    font-size: 18px;
+}
+
+.insights-value i.positive { color: #4CAF50; }
+.insights-value i.negative { color: #F44336; }
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .revenue-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .insights-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .period-selector {
+        gap: 10px;
+    }
+    
+    .period-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+    
+    .revenue-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .insights-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .revenue-table th,
+    .revenue-table td {
+        padding: 15px;
+    }
+    
+    .comparison-value {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .analytics-title {
+        font-size: 24px;
+    }
+    
+    .revenue-card {
+        padding: 20px;
+    }
+    
+    .revenue-comparison {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .comparison-divider {
+        display: none;
+    }
+    
+    .revenue-table-container {
+        overflow-x: auto;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .period-selector,
+    .table-actions,
+    .btn {
+        display: none;
+    }
+    
+    .revenue-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    
+    .revenue-table {
+        border: 1px solid #ddd;
+    }
+}

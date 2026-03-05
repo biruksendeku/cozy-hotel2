@@ -1,0 +1,412 @@
+/* STYLE FOR HERO */
+	.main {
+	  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+	  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+	  font-family: 'Open Sans', 'Poppins', Sans-Serif;
+	  font-style: normal;
+	  font-optical-sizing: auto;
+	  background: #1c1c1c;
+	}
+    .hero {
+      background: var(--white);
+      display: flex;
+      align-items: center;
+    }
+    .hero-container-div {
+    	height: 70vh;
+    	width: 100%;
+    	background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.65)), url('../assets/food-image4.jpg');
+    	background-size: cover;
+    	background-position: center;
+    	object-fit: cover;
+    	display: flex;
+    	flex-flow: column;
+    	justify-content: flex-end;
+    	gap: 25px;
+    }
+    .header-2nd-container {
+    	display: flex;
+    	flex-flow: row nowrap;
+    	justify-content: flex-start;
+    	align-items: center;
+    	width: 100%;
+    	position: relative;
+    }
+    .all-other-links {
+    	display: flex;
+    	flex-flow: column;
+    	justify-content: flex-start;
+    	align-items: flex-start;
+        background: #1a1a1a;
+        border-bottom-right-radius: 8px;
+        width: 30vw;
+        height: 100vh;
+        max-width: 250px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-top: 1px solid var(--secondary);
+    }
+    .all-other-links > div {
+      display: flex;
+      flex-flow: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 0 50px 50px 8px;
+      overflow: scroll;
+      margin-left: 10px;
+    }
+    .all-other-links > div > a {
+      text-decoration: none;
+      color: #ccc;
+      font-size: 17px;
+      font-weight: light;
+      font-style: normal;
+      font-family: serif;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      margin: 15px 0;
+    }
+    .all-other-links > div > a:hover {
+    	border-bottom: 1px solid var(--primary);
+    }
+    .hero-divs > h1 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      font-family: serif;
+      font-optical-sizing: auto;
+      font-style: normal;
+      text-align: center;
+      padding: 25px;
+      color: var(--white);
+    }
+    .hero-divs > p {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--gray-light);
+      text-align: center;
+      padding: 0 25px 0 25px;
+    }
+    .hero-link-container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      padding: 0 25px 35px 25px;
+    }
+    .hero-links {
+      padding: 10px 16px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: calc(var(--radius) + 15px);
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', 'Poppins', Sans-Serif;
+      font-style: normal;
+    }
+    .hero-link1 {
+      background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), var(--primary-dark);
+    }
+    .hero-link1 > a {
+      color: var(--white);
+      text-decoration: none;
+    }
+    .hero-link1:hover {
+    	box-shadow: -2px 0px 15px var(--primary);
+    	transform: translateY(-3px);
+    }
+    .hero-link2 {
+      background: transparent;
+      border: 0.5px solid #fff;
+      color: #fff;
+    }
+    .hero-link2 > a {
+      text-decoration: none;
+      color: #fff;
+    }
+    .hero-link2:hover {
+    	transform: translateY(-3px);
+    	border-color: var(--secondary);
+    }
+    .hero-img-container {
+      background: var(--gray-light);
+      height: 150px;
+      margin-bottom: 25px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      padding: 10px;
+      animation-name: bounce;
+      animation-timing-function: ease;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-fill-mode: both;
+    }
+    @keyframes bounce {
+    	0% {
+    		transform: translateY(0);
+    	}
+    	100% {
+    		transform: translateY(-10px);
+    	}
+    }
+  
+/* STYLE FOR MENU */
+    .menu-container {
+      width: 100%;
+      margin: 15px 0;
+      background: #1a1a1a;
+      border-radius: calc(var(--radius) + 5px);
+    }
+    .menu-data-container {
+      border-radius: calc(var(--radius) + 5px);
+      padding: 25px 10px;
+      border-bottom: 1px solid var(--secondary);
+    }
+    .foods-container {
+      border: 0.5px solid #1c1c1c;
+      padding: 25px;
+      margin: 30px 5px;
+      border-radius: var(--radius);
+      transition: all 0.5s ease;
+      background: #2a2a2a;
+      box-shadow: 0 10px 30px rgba(100, 100, 100, 0.1);
+      background: transparent;
+      border-bottom: 0.25px solid var(--primary);
+    }
+    .foods-container:hover {
+      transform: translateY(-8px);
+    }
+    .menu-header > h1 {
+      font-family: serif;
+      font-size: 1.8rem;
+      text-align: center;
+      padding: 25px 25px 10px 25px;
+      color: #ccc;
+    }
+    .menu-message > p {
+      font-family: 'Poppins', Sans-Serif;
+      font-size: 16px;
+      color: #bbb;
+      padding: 0 25px 25px 25px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .menu-image-container {
+      position: relative;
+    }
+    .food-image > img {
+    	border-radius: var(--radius);
+    	object-fit: cover;
+    	width: 100%;
+    	height: 270px;
+    }
+    .food-image-tag {
+      position: absolute;
+      top: 20px;
+      left: 15px;
+      z-index: 1000;
+      font-size: 14px;
+      font-weight: 500;
+      color: #c2c2c2;
+      background-color: var(--secondary);
+      border-radius: calc(var(--radius) - 2px);
+      padding: 4px 8px;
+      text-align: center;
+    }
+    .food-rating-tag {
+      position: absolute;
+      top: 20px;
+      right: 15px;
+      z-index: 1000;
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #2c2c2c;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--radius);
+      text-align: center;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+      padding: 4px 8px;
+      border: 0.1px solid var(--gray-light);
+    }
+    .food-rating-tag > i {
+      color: gold;
+      font-size: 1rem;
+    }
+    .menu-data {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-evenly;
+      gap: 25px;
+      padding: 25px;
+      background: #222;
+      border-radius: calc(var(--radius) + 5px);
+    }
+    .menu-data > hr {
+      height: 0.25px;
+    }
+    .food-data-container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      font-size: 18px;
+      font-weight: 500;
+      font-family: serif;
+    }
+    .food-name {
+      color: var(--primary);
+      font-size: 20px;
+    }
+    .food-price {
+      color: #bbb;
+    }
+    .food-info {
+      font-size: 14px;
+      font-weight: light;
+      color: #b1b1b1;
+    }
+    .food-action-data {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .food-action-container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+    .food-time {
+      font-size: 16px;
+      font-weight: light;
+      color: #b7b7b7;
+    }
+    .food-time > i {
+      color: var(--secondary);
+    }
+    .food-energy {
+      font-size: 16px;
+      font-weight: light;
+      color: #b7b7b7;
+    }
+    .food-energy > i {
+      color: var(--secondary);
+    }
+    .food-action {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+    }
+    .add-to-cart {
+      outline: none;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      font-size: 20px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      font-family: 'Montserrat', 'Poppins', Sans-Serif;
+      font-style: normal;
+      font-optical-sizing: auto;
+    }
+    .add-to-cart:hover {
+      box-shadow: 0 2px 6px var(--primary);
+    }
+    .add-to-cart:active {
+    	transform: scale(1.03);
+    }
+  
+/* STYLE FOR FEATURES */
+    .features {
+      margin: 15px 0;
+    }
+    .features-container {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 25px;
+      padding: 25px;
+    }
+    .feature-lists {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 260px;
+      height: 250px;
+      padding: 15px;
+      border-radius: var(--radius);
+      background: var(--dark);
+      background: #181818;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .feature-lists:hover {
+      transform: translateY(-5px);
+      box-shadow: -2px 6px 4px rgba(80,80,80,0.3);
+    }
+    .feature-lists > span {
+      padding: 10px;
+      border-radius: 50%;
+      background: transparent;
+    }
+    .feature-lists > span > i {
+      font-size: 1.2rem;
+      color: var(--secondary);
+    }
+    .feature-lists > h1 {
+      font-size: 17px;
+      font-weight: 550;
+      color: #ccc;
+    }
+    .feature-lists > p {
+      font-size: 14px;
+      font-weight: light;
+      color: #b7b7b7;
+    }
+/** Added show icon **/
+.add-to-cart {
+	position: relative;
+}
+.added-show {
+	background: green;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 3px;
+	display: grid;
+	place-content: center;
+	display: none;
+}
+.fa-check-circle {
+	color: var(--white);
+	font-size: 0.85rem;
+}

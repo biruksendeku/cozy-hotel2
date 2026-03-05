@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Sally's Kitchen</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin/partials/header.css">
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/css/admin/dashboard-extra.css">
+    <link rel="stylesheet" href="/css/admin/partials/footer.css">
+</head>
+<body>
+    <!-- ADMIN HEADER -->
+
+    <%- include('../partials/admin/header.ejs') %>
+
+    <!-- DASHBOARD CONTENT -->
+    <main class="dashboard-content">
+        <div class="container">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <div class="welcome-content">
+                    <h2>Welcome back, Administrator! 👋</h2>
+                    <p>Here's what's happening with your restaurant today. Manage your menu, track orders, and grow your business.</p>
+                    
+                    <div class="welcome-stats">
+                        <div class="welcome-stat">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span><span class="stat-number">
+                            	<%= orders.today %>
+                            </span> new orders today</span>
+                        </div>
+                        <div class="welcome-stat">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span><span class="stat-number"> <%= revenue.today %>
+                            </span> revenue today</span>
+                        </div>
+                        <div class="welcome-stat">
+                            <i class="fas fa-users"></i>
+                            <span><span class="stat-number">8</span> new customers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-sales">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-arrow-up"></i>
+                            <%= revenue.dailyChange %>
+                        </div>
+                    </div>
+                    <!--<div class="stat-value"> <%= //revenue.monthly.thisMonth %>
+                    </div>
+                    <div class="stat-label">Total Revenue</div>
+                    <div class="stat-subtext">This month</div>-->
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-orders">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <!--<div class="stat-trend">
+                            <i class="fas fa-arrow-up"></i>
+                            <%= //orders.monthly.monthlyChange %>
+                        </div>-->
+                    </div>
+                    <!--<div class="stat-value"> <%= //orders.monthly.monthlyChange %>
+                    </div>
+                    <div class="stat-label">Total Orders</div>
+                    <div class="stat-subtext">30 days period</div>-->
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-customers">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-trend down">
+                            <i class="fas fa-arrow-down"></i>
+                            2.1%
+                        </div>
+                    </div>
+                    <div class="stat-value"> <%= totalCustomers %> </div>
+                    <div class="stat-label">Total Customers</div>
+                    <div class="stat-subtext">Active customers</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-foods">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-arrow-up"></i>
+                            15.3%
+                        </div>
+                    </div>
+                    <div class="stat-value"> <%= totalDishes %> </div>
+                    <div class="stat-label">Menu Items</div>
+                    <div class="stat-subtext">Active foods</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3 class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    Quick Actions
+                </h3>
+                
+                <div class="actions-grid">
+                    <a href="/admin/create" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <h4>Add New Food</h4>
+                        <p>Create a new menu item for your restaurant</p>
+                    </a>
+                    
+                    <a href="/admin/foods#foods" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <h4>Manage Foods</h4>
+                        <p>View, edit, or delete existing menu items</p>
+                    </a>
+                    
+                    <a href="/admin/orders" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4> Order Reports </h4>
+                        <p> Order analytics and performance reports </p>
+                    </a>
+                    
+                    <a href="/admin/revenue" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h4> Revenue Reports </h4>
+                        <p> Revenue analytics and performance reports </p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Activity & Top Foods -->
+            <div class="content-columns">
+                <div class="columns-grid">
+                
+                    <!-- Recent Activity -->
+
+                    <!-- Top Foods -->
+                    <div class="column">
+                        <div class="top-foods">
+                            <h3 class="section-title">
+                                <i class="fas fa-fire"></i>
+                                Top Selling Foods
+                            </h3>
+                            
+                            <div class="foods-grid">
+                                <!-- Food 1 -->
+                              <% if(topFoods.length !== 0) { %>
+                               <% topFoods.forEach(f => { %>
+                                <div class="food-card">
+                                    <div class="food-image">
+                                        <!--<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Cheeseburger">-->
+                                        <img src="<%= f.foodDetails.imageUrl %>" alt="<%= f.foodDetails.name %>">
+                                    </div>
+                                    <div class="food-content">
+                                        <div class="food-header">
+                                            <!--<h4> Cheeseburger Deluxe </h4>-->
+                                            <h4> <%= f.foodDetails.name %> </h4>
+                                            <!--<div class="food-price"> $12.99 </div>-->
+                                            <div class="food-price"> <%= f.foodDetails.price %> </div>
+                                        </div>
+                                        <div class="food-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            <!--<span> 4.5 </span>-->
+                                            <span> <%= f.foodDetails.rating %> </span>
+                                        </div>
+                                        <div class="food-orders">
+                                            <i class="fas fa-shopping-bag"></i>
+                                            <!--142 orders this month-->
+                                            <p> <%= f.count %> orders from this item! </p>
+                                        </div>
+
+                                        <div class="food-orders">
+                                        	<i class="fas fa-chart-line"></i>
+                                        	<p> <%= f.totalRevenue %> revenue from this item! </p>
+                                        </div>
+                                    </div>
+                                </div>
+                              <% }) %>
+                             <% }else { %>
+                               <h3> No top foods yet. </h3>
+                             <% } %>
+                                
+                                <!-- Food 2 -->
+                                <!--<div class="food-card">
+                                    <div class="food-image">
+                                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Pizza">
+                                    </div>
+                                    <div class="food-content">
+                                        <div class="food-header">
+                                            <h4>Pepperoni Pizza</h4>
+                                            <div class="food-price">$15.99</div>
+                                        </div>
+                                        <div class="food-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <span>4.0</span>
+                                        </div>
+                                        <div class="food-orders">
+                                            <i class="fas fa-shopping-cart"></i>
+                                            98 orders this month
+                                        </div>
+                                    </div>
+                                </div>-->
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ADMIN FOOTER -->
+    <%- include('../partials/admin/footer.ejs') %>
+    
+    <script src="/js/admin/dashboard.js"></script>
+</body>
+</html>

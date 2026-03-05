@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title> Hotel Transylvania | Orders Management Page </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin/partials/header.css">
+  <link rel="stylesheet" href="/css/admin/order.css">
+  <link rel="stylesheet" href="/css/admin/partials/footer.css">
+ </head>
+ 
+<body>
+ <main class="main">
+
+  <%- include('../partials/admin/header.ejs') %>
+
+  <section class="order-hero">
+        <div class="hero-header-container">
+          <div class="hero-head">
+            <i class="fas fa-shopping-cart"></i>
+            <span> Orders Management </span>
+          </div>
+          <div class="hero-link1">
+            <a href="/admin"> Dashboard </a>
+            <i class="fas fa-chevron-right"></i>
+            <span> All Orders </span>
+          </div>
+          <div class="hero-link2">
+            <a href="/admin/foods">
+              <i class="fas fa-utensils"></i>
+              <span> Browse Foods </span>
+            </a>
+          </div>
+        </div>
+      </section>
+  
+      <section class="order-stats">
+        <div class="hero-stats-container">
+  
+          <div class="stat-data">
+            <span> Today Data Analysis </span>
+          </div>
+  
+          <div class="order-stat order-stat1">
+            <span>
+              <i class="fas fa-shopping-cart"></i>
+            </span>
+            <article>
+              <span> 522 </span>
+              <small> TOTAL ORDERS </small>
+            </article>
+          </div>
+          <div class="order-stat order-stat2">
+            <span>
+              <i class="fas fa-clock"></i>
+            </span>
+            <article>
+              <span> 147 </span>
+              <small> PENDING </small>
+            </article>
+          </div>
+          <div class="order-stat order-stat3">
+            <span>
+              <i class="fas fa-check-circle"></i>
+            </span>
+            <article>
+              <span> 255 </span>
+              <small> COMPLETED </small>
+            </article>
+          </div>
+          <div class="order-stat order-stat4">
+            <span>
+              <i class="fas fa-dollar-sign"></i>
+            </span>
+            <article>
+              <span> $24, 500 </span>
+              <small> TOTAL REVENUE </small>
+            </article>
+          </div>
+        </div>
+      </section>
+  
+      <section class="order-table">
+        <div class="order-table-container">
+  
+          <div class="order-filter-container">
+  
+            <form method="GET" action="/admin/orders#table">
+  
+              <!-- Search -->
+              <div class="order-filter-input">
+                <input
+                  type="text"
+                  name="search"
+                  placeholder="Search by order ID or email"
+                  value="<%= query.search || '' %>"
+                >
+              </div>
+  
+              <!-- Sort -->
+              <div class="order-filter-select">
+                
+                <select name="sort">
+                  <option value=""> Sort By </option>
+                  <option value="newest" <%=query.sort==='newest' ? 'selected' : '' %>>
+                   Newest First 
+                  </option>
+                  <option value="oldest" <%=query.sort==='oldest' ? 'selected' : '' %>>
+                     Oldest First 
+                  </option>
+                </select>
+                
+                <button type="submit">
+                  <i class="fas fa-filter"></i>
+                  <span> Apply </span>
+                </button>
+                
+              </div>
+            </form>
+  
+          </div>
+  
+          <div class="order-table-div" id="table">
+            <div class="table-header">
+              <div class="table-header-inside">
+                <span class="list-span">
+                  <i class="fas fa-list"></i>
+                  <p> Recent Orders </p>
+                </span>
+                
+                <button class="print-span" onclick="printOrders()">
+                  <i class="fas fa-print"></i>
+                  <p> Print </p>
+                </button>
+              </div>
+            </div>
+            
+            <div class="order-data-table">
+              <span>
+                <i class="fas fa-shopping-cart"></i>
+              </span>
+              <div class="data-div">
+                <h2> No Orders Found </h2>
+                <p> There are no orders yet. </p>
+              </div>
+              <div class="link-div">
+                <a href="/admin">
+                  <i class="fas fa-user-circle"></i>
+                  <span> Visit Dashboard </span>
+                </a>
+              </div>
+            </div>
+            
+            <div class="result-data">
+              <div class="order-result bottom-result-divs">
+                Showing <strong class="current-order"> 0 </strong> of <strong class="total-orders"> 0 </strong> Orders
+              </div>
+              <div class="page-result bottom-result-divs">
+                Page <strong class="current-page"> 1 </strong> of <strong class="total-page"> 0 </strong>
+              </div>
+              
+          </div>
+          </div>
+          
+        </div>
+      </section>
+
+  <%- include('../partials/admin/footer.ejs') %>
+  
+ </main>
+</body>
+</html>

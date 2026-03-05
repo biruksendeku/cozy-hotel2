@@ -1,0 +1,161 @@
+/* dashboard-extra.css - Add this AFTER your existing CSS */
+
+/* Color Variables */
+:root {
+    --hotel-gold: #B89C4A;
+    --hotel-gold-dark: #9E843E;
+    --hotel-burgundy: #7A1F1F;
+    --hotel-burgundy-dark: #5E1818;
+    --hotel-dark: #1a1a1a;
+}
+
+/* Stat Card Links (Appear on hover) */
+.stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-link {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--hotel-burgundy);
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transform: translateY(100%);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    z-index: 10;
+}
+
+.stat-card:hover .stat-link {
+    transform: translateY(0);
+}
+
+.stat-link:hover {
+    background: var(--hotel-burgundy-dark);
+}
+
+.stat-link i {
+    font-size: 12px;
+}
+
+/* Icon Colors */
+.stat-card .icon-sales {
+    background: transparent;
+    border: 0.5px solid var(--hotel-burgundy);
+}
+
+.stat-card .icon-orders {
+    background: transparent;
+    border: 0.5px solid var(--hotel-burgundy);
+}
+
+.stat-card .icon-customers {
+    background: transparent;
+    border: 0.5px solid var(--hotel-burgundy);
+}
+
+.stat-card .icon-foods {
+    background: transparent;
+    border: 0.5px solid var(--hotel-burgundy);
+}
+
+/* Trend Indicators */
+.stat-card .stat-trend i {
+    color: #4CAF50;
+}
+
+.stat-card .stat-trend.down i {
+    color: #F44336;
+}
+
+/* Food Card Elements */
+.food-card .food-price {
+    color: var(--hotel-gold);
+    font-weight: 700;
+}
+
+.food-card .food-rating i {
+    color: var(--hotel-gold);
+}
+
+.food-card .food-orders i {
+    color: var(--hotel-burgundy);
+}
+
+.food-card:hover {
+    border-color: var(--hotel-gold) !important;
+}
+
+/* Section Title Icons */
+.section-title i {
+    color: var(--hotel-gold);
+}
+
+/* Quick Action Cards */
+.action-card:hover {
+    border-color: var(--hotel-gold) !important;
+    box-shadow: 0 10px 25px rgba(184, 156, 74, 0.1);
+}
+
+.action-card .action-icon {
+    background: var(--hotel-gold);
+}
+
+/* View All Link */
+.view-all-link a {
+    color: var(--hotel-burgundy);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: rgba(122, 31, 31, 0.05);
+}
+
+.view-all-link a:hover {
+    background: rgba(122, 31, 31, 0.1);
+    color: var(--hotel-burgundy-dark);
+}
+
+/* Summary Card */
+.summary-card {
+    border-color: #eee !important;
+}
+
+.summary-card h3 {
+    color: var(--hotel-dark);
+}
+
+.summary-card .summary-value {
+    color: var(--hotel-gold);
+}
+
+.summary-card a {
+    color: var(--hotel-burgundy);
+}
+
+/* Welcome Section (if needed) */
+.welcome-section {
+    background: var(--hotel-gold);
+}
+.view-history-link {
+	color: var(--secondary);
+	font-weight: 500;
+	text-decoration: none;
+}
+.view-history-link:hover {
+	text-decoration: 1px solid var(--secondary) underline;
+}

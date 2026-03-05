@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title> Hotel Transylvania | Orders Management Page </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin/partials/header.css">
+  <link rel="stylesheet" href="/css/admin/edit.css">
+  <link rel="stylesheet" href="/css/admin/partials/footer.css">
+
+  </head>
+  <body>
+    <main class="main">
+
+    <%- include('../partials/admin/header.ejs') %>
+
+    <!-- STATUS MESSAGE MANAGERS -->
+      <% if(error.length !==0 || success.length !== 0) { %>
+            <section class="creation-status">
+              <div class="creation-status-container">
+    
+                <% if(error.length !== 0 && success.length === 0) { %>
+                  <div class="creation-status-div creation-failed" style="display: bolck; z-index: 1001;">
+                    <p>
+                      <%= error %>
+                    </p>
+                  </div>
+                <% } else{ %>
+                  <style>
+                    .creation-failed {
+                      display: none;
+                    }
+                  </style>
+                <% } %>
+    
+                <% if(success.length !== 0 && error.length === 0) { %>
+                  <div class="creation-status-div creation-success" style="display: block; z-index: 1001;">
+                    <p>
+                      <%= success %>
+                    </p>
+                  </div>
+                <% } else{ %>
+                  <style>
+                    .creation-success {
+                      display: none;
+                    }
+                  </style>
+                <% } %>
+    
+              </div>
+            </section>
+      <% } %>
+
+      <!-- HERO SECTION -->
+      <section class="edit-container">
+       <div class="hero-content">
+        <div class="edit-header">
+          <h1>
+            <i class="fas fa-edit"></i>
+            Edit The Selected Food Item
+          </h1>
+        </div>
+
+        <div class="breadcrumb">
+          <a href="/admin"> Dashboard </a>
+          <i class="fas fa-chevron-right"></i>
+          <a href="/admin/foods#foods"> Foods </a>
+          <i class="fas fa-chevron-right"></i>
+          <span> Edit </span>
+        </div>
+       </div>
+
+        <!--<hr style="margin: 25px auto 40px auto; width: 90%;">-->
+
+        <div class="edit-info">
+        	<p>
+        		Preview the full food item information and edit it down below.
+        	</p>
+        </div>
+
+        <div class="food-preview">
+          <div class="food-item">
+            <div class="image-div">
+              <span class="category-tag">
+                <% const foodTag = food.category.toUpperCase() || FRESH %>
+                <%= foodTag %>
+              </span>
+              <span class="rating-tag">
+                <i class="fas fa-star"></i>
+                <article>
+                  <%= food.rating || 4.5 %>
+                </article>
+              </span>
+
+              <div class="image-container">
+                <img src="<%= food.imageUrl %>" alt="<%= food.name %>">
+              </div>
+
+            </div>
+            <div class="name-price-div">
+              <p>
+                <%= food.name %>
+              </p>
+              <span> $<%= food.price %> </span>
+            </div>
+            <div class="foodInfo-div">
+              <p>
+                <%= food.foodInfo %>
+                <!--This food contains 35g of sugar and 45g of protein.-->
+              </p>
+            </div>
+
+            <hr style="margin: 15px 0; width: 90%;">
+
+            <div class="time-energy-div">
+              <span class="time-span">
+                <i class="fas fa-clock"></i>
+                <p>
+                  <%= food.preparationTime %>
+                </p>
+              </span>
+              <span class="energy-span">
+                <i class="fas fa-fire"></i>
+                <p>
+                  <%= food.calorie %>kcal
+                </p>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- FORM SECTION -->
+      <section class="form-section" id="updateItem">
+        <div class="form-container">
+          <div class="form-head">
+            <h1> Upate Menu Item </h1>
+          </div>
+          <div class="form-message">
+            <p>
+              Fill in all the details below to update the selected item to your restaurant's menu. Unfilled fields will preserve the last provided information.
+            </p>
+          </div>
+
+          <hr style="width: 100%; margin: 25px 0;">
+
+          <div class="form-container-div">
+            <form action="/admin/edit/<%= food._id %>" method="post" enctype="multipart/form-data" class="form-form">
+              <div class="form-name form-data">
+                <label for="name">
+                  <i class="fas fa-utensils"></i>
+                  <span> Food Name </span>
+                </label>
+                <input type="text" id="name" name="name" placeholder="Previous: <%= food.name %>">
+                <span> Update the food name that will be presented to customers. </span>
+              </div>
+
+              <div class="form-price form-data">
+                <label for="price">
+                  <i class="fas fa-tag"></i>
+                  <span> Price ($) </span>
+                </label>
+                <input type="number" step="any" id="price" name="price" placeholder="Previous: $<%= food.price %>">
+                <span> Update the price in <strong>USD</strong> Customers will see this exact amount. </span>
+              </div>
+
+              <div class="form-calorie form-data">
+                <label for="calorie">
+                  <i class="fas fa-fire"></i>
+                  <span> Calorie (kcal) </span>
+                </label>
+                <input type="number" step="any" id="calorie" name="calorie" placeholder="Previous: <%= food.calorie %>kcal">
+                <span> Update the calorie in kcal. </span>
+              </div>
+
+              <div class="form-category form-data">
+                <label for="category">
+                  <i class="fas fa-utensils"></i>
+                  <span> Food Category </span>
+                </label>
+                <input type="text" id="category" name="category" placeholder="Previous: <%= food.category %>">
+                <span> Update the food category. </span>
+              </div>
+
+              <div class="form-rating form-data">
+                <label for="rating">
+                  <i class="fas fa-star"></i>
+                  <span> Rating (1-5) </span>
+                </label>
+
+                <div class="rating-input">
+                  <input type="number" step="any" id="rating" name="rating" placeholder="Previous: <%= food.rating %>">
+                  <div>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half"></i>
+                  </div>
+                </div>
+
+                <span> Optional. Leave empty for default rating of 4.5 starts. </span>
+              </div>
+
+              <div class="form-image form-data">
+                <label>
+                  <i class="fas fa-image"></i>
+                  <span> Food Image </span>
+                </label>
+                <div class="image-container">
+                  <label for="imageInput" class="image-placeholder">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>
+                      Click to update the food image.
+                    </p>
+                    <span> PNG, JPG, WEBP up to 5MB </span>
+                  </label>
+                  <input type="file" id="imageInput" name="image" accept="image/*" style="display: none;">
+                </div>
+                <span> Recommended size 600x400 pixels. High-quality images perform better. </span>
+              </div>
+
+              <div class="preview-div form-data" id="previewContainer">
+                <h1>
+                  <i class="fas fa-hamburger"></i>
+                  <span> Image Preview </span>
+                </h1>
+              
+                <div class="image-preview-container">
+                  <img src="#" id="preview" alt="Image Preview">
+                </div>
+              </div>
+
+              <div class="form-foodInfo form-data">
+                <label for="foodInfo">
+                  <i class="fas fa-info-circle"></i>
+                  <span> Food Description </span>
+                </label>
+
+                <textarea type="text" id="foodInfo" name="foodInfo" placeholder="Previous: <%= food.foodInfo %>"
+                  rows="6"></textarea>
+
+                <span> Update the description that will be visible to customers on your main menu page. </span>
+              </div>
+
+              <div class="form-prepTime form-data">
+                <label>
+                  <i class="fas fa-clock"></i>
+                  <span> Preparation Time </span>
+                </label>
+
+                <div class="checkbox-container">
+                  <label for="prepTime1" class="checkbox-label">
+                    <input type="radio" id="prepTime1" name="preparationTime" value="15-20 mins">
+                    <span class="checkbox-text">
+                      <strong> Fast (15-20 minutes) </strong>
+                      <small> Perfect for quick bites, salads, sandwiches, and appetizers. Most popular choice. </small>
+                    </span>
+                  </label>
+
+                  <label for="prepTime2" class="checkbox-label">
+                    <input type="radio" id="prepTime2" name="preparationTime" value="25-30 mins">
+                    <span class="checkbox-text">
+                      <strong> Medium (25-30 minutes) </strong>
+                      <small> Ideal for cooked meals, pastas,burgers, and main course items. </small>
+                    </span>
+                  </label>
+
+                  <label for="prepTime3" class="checkbox-label">
+                    <input type="radio" id="prepTime3" name="preparationTime" value="35-40 mins">
+                    <span class="checkbox-text">
+                      <strong> Slow (35-40 minutes) </strong>
+                      <small> For speciality items, pizzas, baked goods, and complex dishes. </small>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <hr style="width: 100%; margin: 25px 0;">
+
+              <div class="form-actions">
+                <a href="/admin/foods/#foods" class="all-actions">
+                  <i class="fas fa-arrow-left"></i>
+                  <span> Cancel and Go Back </span>
+                </a>
+                <button type="reset" class="all-actions">
+                  <i class="fas fa-redo"></i>
+                  <span> Clear Form </span>
+                </button>
+                <button type="submit" id="createItem" class="all-actions">
+                  <i class="fas fa-check"></i>
+                  <span> Update Food Item </span>
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <%- include('../partials/admin/footer.ejs') %>
+      
+    </main>
+    <script src="/js/admin/edit.js"></script>
+  </body>
+</html>

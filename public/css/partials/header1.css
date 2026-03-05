@@ -1,0 +1,280 @@
+    :root {
+      --primary: #FF6B6B;
+      --primary-dark: #FF5252;
+      --secondary: #4ECDC4;
+      --dark: #2D3436;
+      --light: #F9F9F9;
+      --gray: #636E72;
+      --gray-light: #DFE6E9;
+      --white: #FFFFFF;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Poppins', Sans-Serif;
+      font-style: normal;
+      font-optical-sizing: auto;
+      line-height: 1.6;
+      color: var(--dark);
+      background: var(--gray-light);
+      overflow-x: hidden;
+      position: relative;
+    }
+    .header {
+      font-family: Serif, 'Playfair Display';
+      background: var(--white);
+      background: transparent;
+      padding: 0 15px;
+      padding: 0 7.5px;
+      position: sticky;
+      top: 0;
+      /* box-shadow: var(--shadow); */
+      z-index: 1001;
+    }
+    .header-container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      background: #1a1a1a;
+    }
+    .header-logo {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      gap: 7.5px;
+      padding: 15px 0;
+      padding: 7.5px 0;
+    }
+    .logo-container {
+      background-color: var(--primary);
+      background: transparent;
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 20px;
+      padding: 10px;
+      border-radius: var(--radius);
+      display: grid;
+      place-content: center;
+    }
+    .logo-container i {
+      font-size: 28px;
+      font-size: 18px;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .logo-name {
+        text-align: left;
+    }
+    .logo-name > a {
+      color: var(--dark);
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Montserrat', 'Poppins', Sans-Serif;
+      font-weight: 600;
+    }
+    .logo-name > a > h1 {
+      font-size: 26px;
+      font-size: 18px;
+      color: var(--white);
+      color: red;
+    }
+    .logo-name > p {
+      color: var(--gray);
+      color: #f4f4f4;
+      font-size: 16px;
+      font-size: 13px;
+    }
+    .link-container {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 15px;
+      gap: 7.5px;
+      padding: 15px 0;
+      padding: 7.5px 0;
+    }
+    .header-links {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      gap: 13px;
+    }
+    .header-links > a > i {
+      font-size: 22px;
+      font-size: 13px;
+    }
+    .header-links > a {
+      color: var(--dark);
+      color: var(--white);
+      font-family: 'Poppins', 'Open Sans', Sans-Serif;
+      font-style: normal;
+      font-size: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+    .header-link1 > a > span {
+      color: var(--primary);
+      border-bottom: 1.5px solid var(--primary);
+    }
+    .header-link1 > a > i {
+    	color: var(--primary);
+    }
+    .header-link5 > a {
+    	font-size: 1.8rem;
+    	font-size: 1.2rem;
+    }
+    @media (max-width: 768px) {
+      .header-container {
+        flex-flow: column;
+        gap: 5px;
+      }
+    }
+.carted-items {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	align-items: center;
+	padding: 15px;
+	padding: 8px;
+	position: relative;
+	border-radius: 10px;
+}
+
+/** ========= SPAN OF THE CART COUNTER */
+/* Cart count badge styling */
+#cartLenShow {
+    display: inline-block;
+    background-color: #e74c3c;
+    color: var(--white);
+    font-size: 15px;
+    font-size: 8px;
+    font-weight: bold;
+    min-width: 18px;
+    min-width: 12px;
+    height: 18px;
+    height: 13px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 50%;
+    padding: 0 4px;
+    margin-left: 5px;
+    vertical-align: top;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* Optional: hide when empty */
+#cartLenShow[data-count="0"] {
+    display: none;
+}
+
+/* Cart icon container positioning */
+.carted-items {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Shopping cart icon */
+.fa-shopping-cart {
+    font-size: 1.8rem;
+    font-size: 1.2rem;
+    color: #333;
+    color: #eee;
+}
+
+/* Notification styling */
+.cart-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    background-color: #2ecc71;
+    color: var(--white);
+    border-radius: 4px;
+    font-weight: 500;
+    z-index: 9999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    animation: slideIn 0.3s ease;
+}
+
+.cart-notification.error {
+    background-color: #e74c3c;
+}
+
+.cart-notification.fade-out {
+    animation: slideOut 0.3s ease;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Optional: Hover effect for cart */
+.header-link5 a:hover .fa-shopping-cart {
+    color: #e74c3c;
+    transition: color 0.3s ease;
+}
+
+.header-link5 a:hover #cartLenShow {
+    background-color: #c0392b;
+    transition: background-color 0.3s ease;
+}
+/* Pulse animation for cart count */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#cartLenShow.update {
+    animation: pulse 0.3s ease;
+}

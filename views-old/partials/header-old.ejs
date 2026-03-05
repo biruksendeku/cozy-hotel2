@@ -1,0 +1,51 @@
+  <header class="header">
+    <div class="header-container">
+      <div class="header-logo">
+       <a href="/">
+        <div class="logo-container">
+          <i class="fas fa-utensils"></i>
+        </div>
+        <div class="logo-name">
+          <h1> Hotel Transylvania </h1>
+          <p> Warm Welcome Guests! </p>
+        </div>
+       </a>
+      </div>
+      <div class="link-container">
+        <div class="header-links header-link1">
+          <a href="/">
+            <i class="fas fa-home"></i>
+            <span> Home </span>
+          </a>
+        </div>
+        <div class="header-links header-link2">
+          <a href="/menu">
+            <i class="fas fa-utensils"></i>
+            <span> Menu </span>
+          </a>
+        </div>
+        <div class="header-links header-link3">
+          <a href="/delivery">
+            <i class="fas fa-truck"></i>
+            <span> Delivery </span>
+          </a>
+        </div>
+        <div class="header-links header-link4">
+          <a href="/contact">
+            <i class="fas fa-phone"></i>
+            <span> Contact </span>
+          </a>
+        </div>
+
+        <div class="header-links header-link5">
+            <a href="/cart">
+                <span class="carted-items">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartLenShow"> <%= cart.length || 0 %> </span>
+                </span>
+            </a>
+        </div>
+        
+      </div>
+    </div>
+  </header>

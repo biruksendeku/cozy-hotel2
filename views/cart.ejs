@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title || 'Shopping Cart' %> | Sally's Kitchen</title>
+    
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <i class="fas fa-shopping-cart"></i>
+            Your Shopping Cart
+        </h1>
+
+        <!-- Messages -->
+        <% if(error && error.length !== 0 || success && success.length !== 0) { %> 
+            <div class="message-container">
+                <% if(error) { %>
+                    <div class="message error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span><%= error %></span>
+                    </div>
+                <% } %>
+                
+                <% if(success) { %>
+                    <div class="message success">
+                        <i class="fas fa-check-circle"></i>
+                        <span><%= success %></span>
+                    </div>
+                <% } %>
+            </div>
+        <% } %>
+
+        <!-- Continue Shopping -->
+        <a href="/#foods" class="continue-shopping">
+            <i class="fas fa-arrow-left"></i>
+            Continue Shopping
+        </a>
+
+        <% if(!cart || cart.length === 0) { %>
+            <!-- Empty Cart -->
+            <div class="empty-cart">
+                <i class="fas fa-shopping-basket"></i>
+                <h3>Your Cart is Empty</h3>
+                <p>Looks like you haven't added anything to your cart yet.</p>
+                <a href="/#foods" class="btn-primary" id="emptyCartLink">
+                    <i class="fas fa-utensils" style="transform: translateY(10px); color: #fff;"></i>
+                    <span style="color: #fff;"> Browse Our Menu </span>
+                </a>
+            </div>
+        <% } else { %>
+            <!-- Cart Table -->
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cart.forEach(item => { %>
+                        <tr style="border: 0.5px solid #555;">
+                            <td data-label="Product">
+                                <div class="product-info">
+                                    <!--<div class="product-icon">
+                                        <i class="fas fa-<%= //item.category === 'food' ? 'hamburger' : 'pizza-slice' %>"></i>
+                                    </div>-->
+                                    <div class="item-image">
+                                      <img src="<%= item.imageUrl %>" alt="<%= item.name %>">
+                                    
+                                      <span class="product-name"><%= item.name %></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-label="Price">
+                                <span class="price">$<%= item.price %></span>
+                            </td>
+                            <td data-label="Quantity">
+                                <form action="/update-cart/<%= item.id %>" method="POST" class="quantity-form">
+                                    <input type="number" 
+                                           name="quantity" 
+                                           value="<%= item.quantity %>" 
+                                           min="0" 
+                                           max="99"
+                                           step="1" 
+                                           class="quantity-input"
+                                           onchange="this.form.submit()">
+                                    <button type="submit" class="btn-action update-btn-action">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
+                            <td data-label="Subtotal">
+                                <span class="subtotal">$<%= (item.price * item.quantity).toFixed(2) %></span>
+                            </td>
+                            <td data-label="Actions">
+                                <div class="action-buttons">
+                                    <form action="/remove-from-cart/<%= item.id %>" method="POST">
+                                        <button type="submit" class="btn-action btn-remove" title="Remove Item">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    <button class="btn-action btn-wishlist" title="Save for Later" onclick="saveForLater('<%= item.id %>')">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <!-- Free Shipping Progress -->
+                <% if((total*1.1) < 50) { %>
+                    <div class="free-shipping-progress">
+                        <div class="progress-bar" style="width: <%= (total / 50) * 100 %>%"></div>
+                    </div>
+                    <div class="shipping-message" style="color: #f7f7f7;font-size: 1.2rem;font-weight: 450;">
+                        <i class="fas fa-truck"></i>
+                        Add $<%= (50 - (total*1.1)).toFixed(2) %> more for FREE shipping!
+                    </div>
+                <% } else { %>
+                    <div class="shipping-message" style="color: #f7f7f7;font-size: 1.2rem;font-weight: 450;">
+                        <i class="fas fa-check-circle" style="color: #51cf66;"></i>
+                        You get FREE shipping!
+                    </div>
+                <% } %>
+
+                <!-- Summary Rows -->
+                <div class="summary-row">
+                    <span class="summary-label">
+                        <i class="fas fa-shopping-bag"></i>
+                        Subtotal (<%= cart.length %> items)
+                    </span>
+                    <span class="summary-value">$<%= total %></span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">
+                        <i class="fas fa-truck"></i>
+                        Shipping
+                    </span>
+                    <span class="summary-value"><%= (total*1.1) >= 50 ? 'FREE' : '$5.99' %></span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">
+                        <i class="fas fa-percent"></i>
+                        Tax (10%)
+                    </span>
+                    <span class="summary-value">$<%= (total * 0.1).toFixed(2) %></span>
+                </div>
+
+                <!-- Total -->
+                <div class="summary-row total-row">
+                    <span class="total-label">
+                        <i class="fas fa-calculator"></i>
+                        Total
+                    </span>
+                    <span class="total-value">
+                        <% if(total >= 50) { %>
+                        	$<%= parseFloat(total*1.1).toFixed(2); %>
+                        <% } else { %>
+                        	$<%= parseFloat(total*1.1 + 5.99).toFixed(2) %>
+                        <% } %>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Checkout Actions -->
+            <div class="checkout-actions">
+                <a href="/#foods" class="btn-secondary">
+                    <i class="fas fa-shopping-basket"></i>
+                    Add More Items
+                </a>
+                
+                <form action="/checkout" method="GET">
+                    <button type="submit" class="btn-checkout">
+                        <i class="fas fa-lock"></i>
+                        Secure Checkout
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        <% } %>
+    </div>
+
+    <!-- JavaScript for Enhancements -->
+    <script>
+        // Save for later functionality
+        function saveForLater(itemId) {
+            alert('Item saved to wishlist! (Feature coming soon)');
+        }
+
+        // Auto-hide messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                setTimeout(() => {
+                    message.style.transition = 'opacity 0.5s ease';
+                    message.style.opacity = '0';
+                    setTimeout(() => message.remove(), 500);
+                }, 5000);
+            });
+        });
+
+        // Quantity validation
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', function() {
+                if(this.value < 0) this.value = 0;
+                if(this.value > 99) this.value = 99;
+            });
+        });
+
+        // Confirmation for remove
+        document.querySelectorAll('.btn-remove').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if(!confirm('Remove this item from cart?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

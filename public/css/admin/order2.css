@@ -1,0 +1,370 @@
+  /* HERO STYLE */
+    .hero-header-container {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding-top: 35px;
+    }
+    .hero-head {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+    .hero-head > i {
+      color: var(--primary);
+      font-size: 2.3rem;
+      font-weight: 600;
+    }
+    .hero-head > span {
+      font-size: 2.3rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .hero-link1 {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+    .hero-link1 > a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: light;
+    }
+    .hero-link1 > a:hover {
+      text-decoration: underline 1px solid var(--primary);
+    }
+    .hero-link1 > i {
+      font-size: 1.2rem;
+      font-weight: light;
+      color: var(--primary);
+    }
+    .hero-link1 > span {
+      font-size: 1.2rem;
+      font-weight: light;
+      color: var(--dark);
+    }
+    .hero-link2 > a {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+      background: var(--primary);
+      color: var(--white);
+      font-size: 1.2rem;
+      border-radius: var(--radius);
+      transition: all 0.3s ease;
+      text-align: center;
+      padding: 7px 25px;
+    }
+    .hero-link2 > a:hover {
+      text-decoration: underline 1px solid var(--white);
+      transform: translateY(-3px);
+      box-shadow: -2px 5px 8px var(--primary);
+    }
+
+   /* STATS STYLES  */
+    .order-stats {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-stats-container {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      width: 95%;
+      margin: 60px 0;
+    }
+    .stat-data {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--dark);
+    }
+    .order-stat {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 25px;
+      padding: 30px;
+      border-radius: var(--radius);
+      background: var(--white);
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    .order-stat:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+    .order-stat > span {
+      width: 60px;
+      height: 60px;
+      display: grid;
+      place-content: center;
+      border-radius: var(--radius);
+    }
+    .order-stat > span > i {
+      color: var(--white);
+      font-size: 1.75rem;
+      font-weight: 550;
+    }
+    .order-stat > article {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    .order-stat > article > span {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .order-stat > article > small {
+      font-size: 0.9rem;
+      font-weight: light;
+      color: var(--gray);
+    }
+    .order-stat1 > span {
+      background: var(--primary);
+    }
+    .order-stat2 > span {
+      background: var(--secondary);
+    }
+    .order-stat3 > span {
+      background-color: orange;
+    }
+    .order-stat4 > span {
+      background-color: purple;
+    }
+
+   /* ORDER TABLE STYLE */
+  .order-table-container {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+  }
+  .order-filter-container {
+    width: 95%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--white);
+    border-radius: var(--radius);
+    transition: all 0.3s ease;
+    padding: 25px 0;
+  }
+  .order-filter-container:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+  }
+  .order-filter-container > form {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 25px;
+    width: 100%;
+  }
+  .order-filter-input {
+    width: 100%;
+  }
+  .order-filter-input > input {
+    outline: none;
+    padding: 15px;
+    border: 1px solid #ddd;
+    font-size: 1.15rem;
+    font-weight: 400;
+    background: var(--gray-light);
+    background: #f4f4f4;
+    border-radius: var(--radius);
+    width: 100%;
+  }
+  .order-filter-input > input:focus {
+    box-shadow: 0 0 3px 1.5px var(--primary);
+  }
+  .order-filter-input > input::placeholder {
+    color: var(--gray);
+    font-size: 1.15rem;
+    font-weight: 400;
+  }
+  .order-filter-select {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .order-filter-select > button {
+    outline: none;
+    border: none;
+    background: var(--primary);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: calc(var(--radius) - 5px);
+    padding: 10px 20px;
+  }
+  .order-filter-select > button > span {
+    color: var(--white);
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  .order-filter-select > button > i {
+    color: var(--white);
+    font-size: 1.3rem;
+  }
+  .order-filter-select > select {
+    border-radius: calc(var(--radius) - 5px);
+    border: 1px solid var(--gray-light);
+    background: #f4f4f4;
+    padding: 10px 20px;
+    outline: none;
+    color: var(--grat);
+    font-size: 1.15rem;
+    font-weight: bold;
+  }
+  .order-table-div {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+    background: var(--white);
+    margin-bottom: 50px; /* HERE IS THE TEMPORARY MARGIN */
+  }
+  .table-header {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background: var(--white);
+  }
+  .table-header-inside {
+    padding: 25px;
+    width: 95%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    background: var(--primary);
+    border-radius: 5px;
+  }
+  .list-span {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .list-span > i, .list-span > p {
+    font-size: 1.75rem;
+    color: var(--white);
+    font-weight: bold;
+  }
+  .print-span {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border-radius: 8px;
+    background: rgba(240, 240, 240, 0.175);
+    padding: 6px 15px;
+    outline: none;
+    border: none;
+  }
+  .print-span > i, .print-span > p {
+    font-size: 1.1rem;
+    color: var(--white);
+    font-weight: bold;
+  }
+  .order-data-table {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+  }
+  .order-data-table > span {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: var(--gray-light);
+    display: grid;
+    place-content: center;
+    padding: 10px;
+  }
+  .order-data-table > span > i {
+    color: var(--gray);
+    font-size: 2.3rem;
+  }
+  .data-div {
+    /* HERE IS THE MAIN PART */
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+  }
+  .link-div > a {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: var(--primary-dark);
+    border-radius: calc(var(--radius) + 5px);
+    color: var(--white);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    text-align: center;
+  }
+  .link-div > a:hover {
+    transform: translateY(-5px);
+    box-shadow: -1px 3px 8px var(--primary-dark);
+  }
+  .link-div > a > i, .link-div > a > span {
+    color: var(--white);
+    font-size: 1.15rem;
+    font-weight: 550;
+  }
+  .result-data {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    background: #f4f4f4;
+    width: 95%;
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+  }
+  .bottom-result-divs {
+    background: #fff;
+    padding: 5px;
+    border-radius: 5px;
+  }

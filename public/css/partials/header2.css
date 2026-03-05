@@ -1,0 +1,131 @@
+:root {
+      --primary: #FF6B6B;
+      --primary-dark: #FF5252;
+      --secondary: #4ECDC4;
+      --dark: #2D3436;
+      --light: #F9F9F9;
+      --gray: #636E72;
+      --gray-light: #DFE6E9;
+      --white: #FFFFFF;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --radius: 16px;
+      --transition: all 0.3s ease;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Poppins', Sans-Serif;
+      font-style: normal;
+      font-optical-sizing: auto;
+      line-height: 1.6;
+      color: var(--dark);
+      background: var(--gray-light);
+      overflow-x: hidden;
+      position: relative;
+    }
+.header {
+	position: sticky;
+	top: 0;
+	z-index: 1002;
+}
+.header-container {
+	background: #1c1c1c;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
+	padding: 20px;
+}
+.header-logo > a {
+	color: var(--white);
+	color: #c9a227;
+	font-style: normal;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	text-decoration: none;
+	transition: all 0.5s ease;
+}
+.header-logo > a:hover {
+	transform: scale(1.01);
+}
+.logo-container {
+	border: 1px solid #c9a227;
+	border-radius: 8px;
+	padding: 12px;
+}
+.logo-container > i {
+	font-size: 22px;
+}
+.logo-name {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	align-items: flex-starr;
+	gap: 0;
+}
+.logo-name > h1 {
+	font-size: 1.3rem;
+	font-weight: 500;
+}
+.logo-name > p {
+	font-size: 0.9rem;
+	font-weight: 400;
+}
+.link-container {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	gap: 30px;
+}
+.header-links > a {
+	color: var(--white);
+	font-size: 1.1rem;
+	font-weight: 500;
+	text-decoration: none;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	transition: all 0.3s ease;
+}
+.header-links > a:hover {
+	border-bottom: 1px solid #c9a227;
+	/* color: #c9a227; */
+}
+.header-links > a > span {
+	font-weight: 350;
+}
+@media (max-width: 768px) {
+	.header-container {
+		flex-flow: column;
+		justify-content: center;
+	}
+}
+.carted-items {
+	padding: 15px;
+	position: relative;
+}
+#cartLenShow {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: #c9a227;
+	color: var(--white);
+	border-radius: 50%;
+	padding: 0 6px;
+	font-size: 15px;
+	font-weight: 600;
+	text-align: center;
+}

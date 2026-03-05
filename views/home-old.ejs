@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title> <%= title %> </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/partials/header.css">
+  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/partials/footer.css">
+  <!--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-->
+</head>
+<body>
+ <main class="main">
+  <%- include('partials/header.ejs') %>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+  
+  <div class="hero-container-div">
+    <div class="hero-divs">
+      <!--<h1> Fresh & Healthy <span style="color: white;">Food</span> Just For You </h1>-->
+      <h1 class="head-msg"> Experience Culinary Excellence </h1>
+    </div>
+    <div class="hero-divs hero-link-container">
+      <div class="hero-links hero-link1">
+        <a href="/menu">
+          <i class="fas fa-bars-staggered"></i>
+          Browse Menu
+        </a>
+      </div>
+      <div class="hero-links hero-link2">
+        <a href="/user-guide">
+          <i class="fas fa-play-circle"></i>
+          How It Works
+        </a>
+      </div>
+    </div>
+   </div>
+  </section>
+  
+  
+  <!-- MENU SECTION -->
+  <section class="menu">
+    <div class="menu-container">
+      <div class="menu-data-container">
+        <div class="menu-header">
+          <h1> Our Fresh Menu </h1>
+        </div>
+        <div class="menu-message">
+          <p> Carefully crafted dishes using the finest ingredients. </p>
+        </div>
+  
+        <!-- Add this wrapper div with an ID -->
+        <div id="foods-list-container">
+          <% if(foods.length !== 0) { %>
+            <% foods.forEach(f => { %>
+              <div class="foods-container" id="foods">
+                <!-- ... rest of your food item code ... -->
+              </div>
+            <% }) %>
+          <% } else { %>
+            <h2 style="text-align: center;"> No foods yet. </h2>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  <!-- FEATURES SECTION -->
+  <section class="features">
+  <div class="features-container">
+    <div class="feature-lists">
+      <span>
+        <i class="fas fa-shipping-fast"></i>
+      </span>
+      <h1> Fast Delivery </h1>
+      <p> Get your foods delivered real fast. </p>
+    </div>
+    <div class="feature-lists">
+      <span>
+        <i class="fas fa-leaf"></i>
+      </span>
+      <h1> Fresh Ingredients </h1>
+      <p> 100% Organic and locally sourced produce </p>
+    </div>
+    <div class="feature-lists">
+      <span>
+        <i class="fas fa-star"></i>
+      </span>
+      <h1> Quality Guarantee </h1>
+      <p> Award winning quality foods. </p>
+    </div>
+    <div class="feature-lists">
+      <span>
+        <i class="fas fa-headset"></i>
+      </span>
+      <h1> 24/7 Support </h1>
+      <p> We're to support anytime you need. </p>
+    </div>
+  </div>
+  </section>
+
+  <%- include('partials/footer.ejs') %>
+ </main>
+ <script src="/js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Admin | Hotel Transylvania | Revenue Analytics </title>
+
+    <!-- ALL CSS IN ONE PLACE -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin/partials/header.css">
+    <link rel="stylesheet" href="/css/admin/revenue.css">
+    <link rel="stylesheet" href="/css/admin/partials/footer.css">
+</head>
+<body>
+  <main class="main">
+  
+    <!-- ADMIN HEADER -->
+    <%- include('../partials/admin/header.ejs') %>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-title-section">
+                <div>
+                    <h1 class="page-title revenue-analytics-native">
+                        <i class="fas fa-chart-line"></i>
+                        Revenue Analytics
+                    </h1>
+                    <div class="breadcrumb hero-links-native">
+                        <a href="/admin">Dashboard</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>Revenue</span>
+                    </div>
+                </div>
+
+                <!--<div class="header-actions">
+                    <a href="/admin/revenue?export=pdf" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Export Report
+                    </a>
+                </div>-->
+            </div>
+
+            <!--<hr style="margin: 25px auto; width: 90%;">-->
+
+            <div class="container">
+                    <div class="section-header revenue-history-native">
+                        <h2 class="section-title">
+                            <i class="fas fa-history"></i>
+                            Revenue History
+                        </h2>
+                        <div class="section-actions">
+                            <a href="/admin/revenue/export" class="action-btn">
+                                <i class="fas fa-download"></i> Export
+                            </a>
+                            <button class="action-btn" onclick="window.print()">
+                                <i class="fas fa-print"></i> Print
+                            </button>
+                        </div>
+                    </div>
+
+            <!-- SUMMARY STATS CARDS -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>$<%= revenueAnalytics?.allTime?.toLocaleString() || 0 %></h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon active">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><%= revenueAnalytics?.daily?.orderCount || 0 %></h3>
+                        <p>Today's Orders</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon rating">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><%= revenueAnalytics?.monthly?.thisMonth?.toLocaleString() || 0 %></h3>
+                        <p>This Month</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon popular">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3><%= revenueAnalytics?.yearly?.thisYear?.toLocaleString() || 0 %></h3>
+                        <p>This Year</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVENUE ANALYTICS SECTION -->
+    <section class="revenue-analytics-section">
+        <div class="container">
+            <div class="analytics-header">
+                <h2 class="analytics-title">
+                    <i class="fas fa-chart-pie"></i>
+                    Revenue Performance
+                </h2>
+                <p class="analytics-subtitle">Track your earnings across different time periods</p>
+            </div>
+
+            <!-- PERIOD SELECTOR -->
+            <div class="period-selector">
+                <a href="/admin/revenue?period=daily" class="period-btn <%= !period || period === 'daily' ? 'active' : '' %>">
+                    <i class="fas fa-sun"></i> Daily
+                </a>
+                <a href="/admin/revenue?period=weekly" class="period-btn <%= period === 'weekly' ? 'active' : '' %>">
+                    <i class="fas fa-calendar-week"></i> Weekly
+                </a>
+                <a href="/admin/revenue?period=monthly" class="period-btn <%= period === 'monthly' ? 'active' : '' %>">
+                    <i class="fas fa-calendar-alt"></i> Monthly
+                </a>
+                <a href="/admin/revenue?period=yearly" class="period-btn <%= period === 'yearly' ? 'active' : '' %>">
+                    <i class="fas fa-calendar"></i> Yearly
+                </a>
+            </div>
+
+            <!-- REVENUE CARDS GRID -->
+            <div class="revenue-grid">
+                <!-- Daily Revenue Card -->
+                <div class="revenue-card daily-card">
+                    <div class="revenue-card-header">
+                        <div class="revenue-icon daily-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div>
+                            <h3>Daily Revenue</h3>
+                            <span class="revenue-period">Today vs Yesterday</span>
+                        </div>
+                    </div>
+                    <div class="revenue-card-body">
+                        <div class="revenue-comparison">
+                            <div class="comparison-item">
+                                <span class="comparison-label">Today</span>
+                                <span class="comparison-value">$<%= revenueAnalytics?.daily?.today?.toLocaleString() || 0 %></span>
+                                <span class="comparison-orders"><%= revenueAnalytics?.daily?.orderCount || 0 %> orders</span>
+                            </div>
+                            <div class="comparison-divider">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="comparison-item">
+                                <span class="comparison-label">Yesterday</span>
+                                <span class="comparison-value">$<%= revenueAnalytics?.daily?.yesterday?.toLocaleString() || 0 %></span>
+                            </div>
+                        </div>
+                        <div class="revenue-change <%= revenueAnalytics?.daily?.isIncrease ? 'positive' : 'negative' %>">
+                            <i class="fas fa-arrow-<%= revenueAnalytics?.daily?.isIncrease ? 'up' : 'down' %>"></i>
+                            <span><%= Math.abs(revenueAnalytics?.daily?.change || 0).toFixed(1) %>% vs yesterday</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Revenue Card -->
+                <div class="revenue-card weekly-card">
+                    <div class="revenue-card-header">
+                        <div class="revenue-icon weekly-icon">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                        <div>
+                            <h3>Weekly Revenue</h3>
+                            <span class="revenue-period">This Week vs Last Week</span>
+                        </div>
+                    </div>
+                    <div class="revenue-card-body">
+                        <div class="revenue-comparison">
+                            <div class="comparison-item">
+                                <span class="comparison-label">This Week</span>
+                                <span class="comparison-value">$<%= revenueAnalytics?.weekly?.thisWeek?.toLocaleString() || 0 %></span>
+                                <span class="comparison-orders"><%= revenueAnalytics?.weekly?.orderCount || 0 %> orders</span>
+                            </div>
+                            <div class="comparison-divider">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="comparison-item">
+                                <span class="comparison-label">Last Week</span>
+                                <span class="comparison-value">$<%= revenueAnalytics?.weekly?.lastWeek?.toLocaleString() || 0 %></span>
+                            </div>
+                        </div>
+                        <div class="revenue-change <%= revenueAnalytics?.weekly?.isIncrease ? 'positive' : 'negative' %>">
+                            <i class="fas fa-arrow-<%= revenueAnalytics?.weekly?.isIncrease ? 'up' : 'down' %>"></i>
+                            <span><%= Math.abs(revenueAnalytics?.weekly?.change || 0).toFixed(1) %>% vs last week</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Revenue Card -->
+                <div class="revenue-card monthly-card">
+                    <div class="revenue-card-header">
+                        <div class="revenue-icon monthly-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Monthly Revenue</h3>
+                            <span class="revenue-period">This Month vs Last Month</span>
+                        </div>
+                    </div>
+                    <div class="revenue-card-body">
+                        <div class="revenue-comparison">
+                            <div class="comparison-item">
+                                <span class="comparison-label">This Month</span>
+                                <span class="comparison-value">$<%= revenueAnalytics?.monthly?.thisMonth?.toLocaleString() || 0 %></span>
+                                <span class="comparison-orders"><%= revenueAnalytics?.monthly?.orderCount || 0 %> orders</span>
+                            </div>
+                            <div class="comparison-divider">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="comparison-item">
+                                <span class="comparison-label">Last Month</span>
+                                <span class="comparison-value">$<%= revenueAnalytics?.monthly?.lastMonth?.toLocaleString() || 0 %></span>
+                            </div>
+                        </div>
+                        <div class="revenue-change <%= revenueAnalytics?.monthly?.isIncrease ? 'positive' : 'negative' %>">
+                            <i class="fas fa-arrow-<%= revenueAnalytics?.monthly?.isIncrease ? 'up' : 'down' %>"></i>
+                            <span><%= Math.abs(revenueAnalytics?.monthly?.change || 0).toFixed(1) %>% vs last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Yearly Revenue Card -->
+                <div class="revenue-card yearly-card">
+                    <div class="revenue-card-header">
+                        <div class="revenue-icon yearly-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div>
+                            <h3>Yearly Revenue</h3>
+                            <span class="revenue-period">This Year vs Last Year</span>
+                        </div>
+                    </div>
+                    <div class="revenue-card-body">
+                        <div class="revenue-comparison">
+                            <div class="comparison-item">
+                                <span class="comparison-label">This Year</span>
+                                <span class="comparison-value">$<%= revenueAnalytics?.yearly?.thisYear?.toLocaleString() || 0 %></span>
+                                <span class="comparison-orders"><%= revenueAnalytics?.yearly?.orderCount || 0 %> orders</span>
+                            </div>
+                            <div class="comparison-divider">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="comparison-item">
+                                <span class="comparison-label">Last Year</span>
+                                <span class="comparison-value">$<%= revenueAnalytics?.yearly?.lastYear?.toLocaleString() || 0 %></span>
+                            </div>
+                        </div>
+                        <div class="revenue-change <%= revenueAnalytics?.yearly?.isIncrease ? 'positive' : 'negative' %>">
+                            <i class="fas fa-arrow-<%= revenueAnalytics?.yearly?.isIncrease ? 'up' : 'down' %>"></i>
+                            <span><%= Math.abs(revenueAnalytics?.yearly?.change || 0).toFixed(1) %>% vs last year</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REVENUE TRENDS TABLE -->
+            <div class="revenue-table-container">
+                <div class="table-header">
+                    <h3>
+                        <i class="fas fa-history"></i>
+                        Revenue History
+                        <% if (period) { %>
+                            <span class="period-indicator">(<%= period %> view)</span>
+                        <% } %>
+                    </h3>
+                    <div class="table-actions">
+                        <button class="table-btn" onclick="window.print()">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="revenue-table">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>Orders</th>
+                                <th>Revenue</th>
+                                <th>Average Order Value</th>
+                                <th>Growth</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% 
+                            const periods = [
+                                { name: 'Today', data: revenueAnalytics?.daily, value: revenueAnalytics?.daily?.today },
+                                { name: 'Yesterday', data: revenueAnalytics?.daily, value: revenueAnalytics?.daily?.yesterday },
+                                { name: 'This Week', data: revenueAnalytics?.weekly, value: revenueAnalytics?.weekly?.thisWeek },
+                                { name: 'Last Week', data: revenueAnalytics?.weekly, value: revenueAnalytics?.weekly?.lastWeek },
+                                { name: 'This Month', data: revenueAnalytics?.monthly, value: revenueAnalytics?.monthly?.thisMonth },
+                                { name: 'Last Month', data: revenueAnalytics?.monthly, value: revenueAnalytics?.monthly?.lastMonth },
+                                { name: 'This Year', data: revenueAnalytics?.yearly, value: revenueAnalytics?.yearly?.thisYear },
+                                { name: 'Last Year', data: revenueAnalytics?.yearly, value: revenueAnalytics?.yearly?.lastYear }
+                            ];
+                            
+                            periods.forEach(period => {
+                                if (period.value > 0) { 
+                            %>
+                            <tr>
+                                <td>
+                                    <div class="period-cell">
+                                        <strong><%= period.name %></strong>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="orders-count"><%= period.data?.orderCount || 0 %></div>
+                                </td>
+                                <td>
+                                    <div class="revenue-amount">$<%= period.value?.toLocaleString() || 0 %></div>
+                                </td>
+                                <td>
+                                    <% const avgOrder = period.data?.orderCount ? (period.value / period.data.orderCount).toFixed(2) : 0 %>
+                                    <div class="avg-order">$<%= avgOrder %></div>
+                                </td>
+                                <td>
+                                    <% 
+                                    let change = 0;
+                                    let isIncrease = true;
+                                    if (period.name === 'Today') {
+                                        change = revenueAnalytics?.daily?.change;
+                                        isIncrease = revenueAnalytics?.daily?.isIncrease;
+                                    } else if (period.name === 'This Week') {
+                                        change = revenueAnalytics?.weekly?.change;
+                                        isIncrease = revenueAnalytics?.weekly?.isIncrease;
+                                    } else if (period.name === 'This Month') {
+                                        change = revenueAnalytics?.monthly?.change;
+                                        isIncrease = revenueAnalytics?.monthly?.isIncrease;
+                                    } else if (period.name === 'This Year') {
+                                        change = revenueAnalytics?.yearly?.change;
+                                        isIncrease = revenueAnalytics?.yearly?.isIncrease;
+                                    }
+                                    %>
+                                    <% if (change !== 0) { %>
+                                        <span class="growth-badge <%= isIncrease ? 'positive' : 'negative' %>">
+                                            <i class="fas fa-arrow-<%= isIncrease ? 'up' : 'down' %>"></i>
+                                            <%= Math.abs(change || 0).toFixed(1) %>%
+                                        </span>
+                                    <% } else { %>
+                                        <span class="growth-badge neutral">—</span>
+                                    <% } %>
+                                </td>
+                            </tr>
+                            <% }}) %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- SUMMARY FOOTER -->
+                <div class="results-summary">
+                    <div class="summary-text">
+                        <strong>Total Revenue:</strong> $<%= revenueAnalytics?.allTime?.toLocaleString() || 0 %>
+                    </div>
+                    <div class="page-info">
+                        <i class="fas fa-chart-line"></i> 
+                        Last updated: <%= new Date().toLocaleDateString() %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INSIGHTS SECTION -->
+            <div class="insights-section">
+                <div class="insights-card">
+                    <div class="insights-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="insights-content">
+                        <h4>Best Performing Period</h4>
+                        <% 
+                        const periods_data = [
+                            { name: 'Today', value: revenueAnalytics?.daily?.today },
+                            { name: 'This Week', value: revenueAnalytics?.weekly?.thisWeek },
+                            { name: 'This Month', value: revenueAnalytics?.monthly?.thisMonth },
+                            { name: 'This Year', value: revenueAnalytics?.yearly?.thisYear }
+                        ];
+                        const best = periods_data.reduce((max, p) => p.value > max.value ? p : max, { value: 0 });
+                        %>
+                        <p class="insights-value">
+                            <%= best.name %>: <strong>$<%= best.value?.toLocaleString() || 0 %></strong>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="insights-card">
+                    <div class="insights-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="insights-content">
+                        <h4>Average Daily Revenue</h4>
+                        <% const avgDaily = revenueAnalytics?.allTime ? revenueAnalytics.allTime / 30 : 0 %>
+                        <p class="insights-value">
+                            <strong>$<%= avgDaily.toFixed(2) %></strong> per day
+                        </p>
+                    </div>
+                </div>
+
+                <div class="insights-card">
+                    <div class="insights-icon">
+                        <i class="fas fa-trend-up"></i>
+                    </div>
+                    <div class="insights-content">
+                        <h4>Growth Trend</h4>
+                        <% 
+                        const monthlyTrend = revenueAnalytics?.monthly?.change || 0;
+                        const trendText = monthlyTrend > 0 ? 'Growing' : (monthlyTrend < 0 ? 'Declining' : 'Stable');
+                        const trendIcon = monthlyTrend > 0 ? 'up' : (monthlyTrend < 0 ? 'down' : 'minus');
+                        %>
+                        <p class="insights-value">
+                            <i class="fas fa-arrow-<%= trendIcon %> <%= monthlyTrend > 0 ? 'positive' : (monthlyTrend < 0 ? 'negative' : '') %>"></i>
+                            <%= trendText %> (<%= Math.abs(monthlyTrend).toFixed(1) %>%)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADMIN FOOTER -->
+    <%- include('../partials/admin/footer.ejs') %>
+
+  </main>
+
+    <script src="/js/admin/revenue.js"></script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Hotel Transylvania</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/admin/partials/header.css">
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/css/admin/dashboard-extra.css">
+    <link rel="stylesheet" href="/css/admin/partials/footer.css">
+    
+    <!-- Extra CSS with #B89C4A and #7A1F1F -->
+    <style>
+        :root {
+            --primary: #B89C4A;
+            --primary-dark: #9E843E;
+            --secondary: #7A1F1F;
+            --secondary-dark: #5E1818;
+            --dark-bg: #1a1a1a;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray: #636E72;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        /* Welcome Section Updates */
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        .welcome-stat i {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Stats Cards with Links */
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(122, 31, 31, 0.15);
+        }
+
+        .stat-link {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            transform: translateY(100%);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .stat-card:hover .stat-link {
+            transform: translateY(0);
+        }
+
+        .stat-link i {
+            font-size: 12px;
+        }
+
+        .stat-link:hover {
+            background: var(--secondary-dark);
+        }
+
+        /* Icon Colors */
+        .icon-sales {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        .icon-orders {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+        }
+
+        .icon-customers {
+            background: linear-gradient(135deg, #B89C4A, #9E843E);
+        }
+
+        .icon-foods {
+            background: linear-gradient(135deg, #7A1F1F, #5E1818);
+        }
+
+        /* Stat Values with Colors */
+        .stat-value {
+            color: var(--dark-bg);
+        }
+
+        .stat-trend {
+            color: var(--secondary);
+        }
+
+        .stat-trend i {
+            color: var(--primary);
+        }
+
+        .stat-trend.down i {
+            color: var(--secondary);
+        }
+
+        /* Quick Action Cards */
+        .action-card {
+            border: 1px solid #eee;
+        }
+
+        .action-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(184, 156, 74, 0.1);
+        }
+
+        .action-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        /* Section Titles */
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Top Foods */
+        .food-price {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .food-rating i {
+            color: var(--primary);
+        }
+
+        .food-orders i {
+            color: var(--secondary);
+        }
+
+        /* Food Card Hover */
+        .food-card:hover {
+            border-color: var(--primary);
+        }
+
+        /* View All Link */
+        .view-all-link {
+            display: flex;
+            justify-content: flex-end;
+            margin: 20px 0;
+        }
+
+        .view-all-link a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: var(--transition);
+            background: rgba(122, 31, 31, 0.05);
+        }
+
+        .view-all-link a:hover {
+            background: rgba(122, 31, 31, 0.1);
+            color: var(--secondary-dark);
+        }
+
+        .view-all-link a i {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ADMIN HEADER -->
+    <%- include('../partials/admin/header.ejs') %>
+
+    <!-- DASHBOARD CONTENT -->
+    <main class="dashboard-content">
+        <div class="container">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <div class="welcome-content">
+                    <h2>Welcome back, Administrator! 👋</h2>
+                    <p>Here's what's happening with your restaurant today. Manage your menu, track orders, and grow your business.</p>
+
+                    <div class="welcome-stats">
+                        <div class="welcome-stat">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span><span class="stat-number"><%= orders.today %></span> new orders today</span>
+                        </div>
+                        <div class="welcome-stat">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span><span class="stat-number">$<%= revenue.today %></span> revenue today</span>
+                        </div>
+                        <div class="welcome-stat">
+                            <i class="fas fa-users"></i>
+                            <span><span class="stat-number"><%= totalCustomers %></span> total customers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards with Links -->
+            <div class="stats-grid">
+                <!-- Revenue Card -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-sales">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-trend <%= revenue.isIncrease ? '' : 'down' %>">
+                            <i class="fas fa-arrow-<%= revenue.isIncrease ? 'up' : 'down' %>"></i>
+                            <%= revenue.dailyChange %>%
+                        </div>
+                    </div>
+                    <div class="stat-value">$<%= revenue.today %></div>
+                    <div class="stat-label">Today's Revenue</div>
+                    <div class="stat-subtext">vs $<%= revenue.yesterday %> yesterday</div>
+                    <a href="/admin/revenue" class="stat-link">
+                        <i class="fas fa-chart-line"></i> View Full Revenue Report
+                    </a>
+                </div>
+
+                <!-- Orders Card -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-orders">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-trend <%= orders.isIncrease ? '' : 'down' %>">
+                            <i class="fas fa-arrow-<%= orders.isIncrease ? 'up' : 'down' %>"></i>
+                            <%= orders.dailyChange %>%
+                        </div>
+                    </div>
+                    <div class="stat-value"><%= orders.today %></div>
+                    <div class="stat-label">Today's Orders</div>
+                    <div class="stat-subtext">
+                        <%= orders.pending %> pending | <%= orders.cancelled %> cancelled
+                    </div>
+                    <a href="/admin/orders" class="stat-link">
+                        <i class="fas fa-list"></i> View All Orders
+                    </a>
+                </div>
+
+                <!-- Customers Card -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-customers">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value"><%= totalCustomers %></div>
+                    <div class="stat-label">Total Customers</div>
+                    <div class="stat-subtext">Registered users</div>
+                    <a href="/admin/customers" class="stat-link">
+                        <i class="fas fa-user-friends"></i> View Customers
+                    </a>
+                </div>
+
+                <!-- Menu Items Card -->
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon icon-foods">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value"><%= totalDishes %></div>
+                    <div class="stat-label">Menu Items</div>
+                    <div class="stat-subtext">Active foods</div>
+                    <a href="/admin/foods" class="stat-link">
+                        <i class="fas fa-utensils"></i> Manage Menu
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3 class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    Quick Actions
+                </h3>
+
+                <div class="actions-grid">
+                    <a href="/admin/create" class="action-card">
+                        <div class="action-icon" style="background: transparent;">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <h4>Add New Food</h4>
+                        <p>Create a new menu item for your restaurant</p>
+                    </a>
+
+                    <a href="/admin/foods" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <h4>Manage Foods</h4>
+                        <p>View, edit, or delete existing menu items</p>
+                    </a>
+
+                    <a href="/admin/orders" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Order Reports</h4>
+                        <p>Order analytics and performance reports</p>
+                    </a>
+
+                    <a href="/admin/revenue" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h4>Revenue Reports</h4>
+                        <p>Revenue analytics and performance reports</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Top Foods Section -->
+            <div class="content-columns">
+                <div class="columns-grid">
+                    <div class="column full-width">
+                        <div class="top-foods">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h3 class="section-title">
+                                    <i class="fas fa-fire"></i>
+                                    Top Selling Foods
+                                </h3>
+                                <!--<div class="view-all-link">
+                                    <a href="/admin/foods/top-selling">
+                                        View All <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>-->
+                            </div>
+
+                            <div class="foods-grid">
+                                <% if(topFoods && topFoods.length > 0) { %>
+                                    <% topFoods.forEach(f => { %>
+                                        <div class="food-card">
+                                            <div class="food-image">
+                                                <img src="<%= f.foodDetails.imageUrl || '/images/default-food.jpg' %>" alt="<%= f.foodDetails.name %>">
+                                            </div>
+                                            <div class="food-content">
+                                                <div class="food-header">
+                                                    <h4><%= f.foodDetails.name %></h4>
+                                                    <div class="food-price">$<%= f.foodDetails.price %></div>
+                                                </div>
+                                                <div class="food-rating">
+                                                    <% for(let i = 1; i <= 5; i++) { %>
+                                                        <% if(i <= Math.floor(f.foodDetails.rating)) { %>
+                                                            <i class="fas fa-star"></i>
+                                                        <% } else if(i === Math.ceil(f.foodDetails.rating) && f.foodDetails.rating % 1 !== 0) { %>
+                                                            <i class="fas fa-star-half-alt"></i>
+                                                        <% } else { %>
+                                                            <i class="far fa-star"></i>
+                                                        <% } %>
+                                                    <% } %>
+                                                    <span><%= f.foodDetails.rating %></span>
+                                                </div>
+                                                <div class="food-orders">
+                                                    <i class="fas fa-shopping-bag"></i>
+                                                    <p><%= f.count %> orders</p>
+                                                </div>
+                                                <div class="food-orders">
+                                                    <i class="fas fa-chart-line"></i>
+                                                    <p>$<%= f.totalRevenue %> revenue</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% }) %>
+                                <% } else { %>
+                                    <div class="empty-state" style="grid-column: 1/-1; text-align: center; padding: 60px;">
+                                        <i class="fas fa-utensils" style="font-size: 60px; color: var(--primary); opacity: 0.5;"></i>
+                                        <h3 style="margin: 20px 0; color: var(--gray);">No top foods yet</h3>
+                                        <p style="color: var(--gray);">Start taking orders to see your best sellers!</p>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Time Revenue Summary -->
+            <div class="summary-card" style="background: var(--white); border-radius: 16px; padding: 30px; margin-top: 30px; border: 1px solid #eee;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <div>
+                        <h3 style="color: var(--dark-bg); margin-bottom: 10px;">All Time Performance</h3>
+                        <p style="color: var(--gray);">Total revenue since day one</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 36px; font-weight: 700; color: var(--primary);">$<%= revenue.allTime %></div>
+                        <div style="color: var(--gray); font-size: 14px;">Total Revenue</div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <a href="/admin/revenue/all-time" style="color: var(--secondary); text-decoration: none; font-weight: 500;">
+                        View Complete History <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ADMIN FOOTER -->
+    <%- include('../partials/admin/footer.ejs') %>
+
+    <script src="/js/admin/dashboard.js"></script>
+</body>
+</html>

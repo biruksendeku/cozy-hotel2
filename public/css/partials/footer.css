@@ -1,0 +1,179 @@
+    .footer-container {
+      background: rgb(17,17,17);
+      color: var(--white);
+      padding: 35px;
+      display: flex;
+      flex-flow: column;
+      gap: 50px;
+      font-family: 'Open Sans', 'Poppins', Sans-Serif;
+      font-optical-sizing: auto;
+      font-style: normal;
+    }
+    .footer-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+      padding-top: 50px;
+      color: var(--white);
+    }
+    .footer-header > h1 {
+      color: #ccc;
+      font-size: 25px;
+      font-weight: 550;
+    }
+    .footer-message > p {
+      color: var(--gray-light);
+      color: #b2b2b2;
+      font-size: 16px;
+      font-weight: light;
+    }
+    .footer-header > i {
+      color: var(--primary);
+      font-size: 22px;
+    }
+    .footer-social-links {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 20px;
+    }
+    .footer-social-links > a {
+      padding: 25px;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: rgba(90, 90, 90, 0.85);
+      display: grid;
+      place-content: center;
+      text-decoration: none;
+      font-family: 'Montserrat', 'Poppins', Sans-Serif;
+      font-style: normal;
+      transition: all 0.5s ease;
+    }
+    .footer-social-links > a:hover {
+    	transform: translateY(-3px);
+    }
+    .footer-social-links > a > i {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+    .footer-quick-links > h1 {
+    	color: #eee;
+    	font-size: 22px;
+    	font-weight: 500;
+    }
+    .footer-quick-links > ul {
+      padding: 10px 20px;
+      list-style-type: none;
+      font-family: 'Montserrat', 'Poppins', Sans-Serif;
+      font-style: normal;
+    }
+    .footer-quick-links > ul > li {
+      padding: 5px;
+    }
+    .footer-quick-links > ul > li > a {
+      text-decoration: none;
+      color: #b2b2b2;
+      font-family: 'Montserrat', 'Poppins', Sans-Serif;
+      font-style: normal;
+      font-size: 15px;
+      font-weight: light;
+    }
+    .footer-quick-links > ul > li > a:hover {
+    	text-decoration: underline;
+    }
+    .footer-customer-service > h1 {
+    	color: #eee;
+    	font-size: 22px;
+    	font-weight: 500;
+    }
+    .footer-customer-service > ul {
+      padding: 10px 20px;
+      list-style-type: none;
+    }
+    .footer-customer-service > ul > li {
+      padding: 5px;
+    }
+    .footer-customer-service > ul > li > a {
+      text-decoration: none;
+      color: #b2b2b2;
+      font-family: 'Montserrat', 'Poppins', Sans-Serif;
+      font-style: normal;
+      font-size: 15px;
+      font-weight: light;
+    }
+    .footer-customer-service > ul > li > a:hover {
+    	text-decoration: underline;
+    }
+    .footer-newsletter {
+      display: flex;
+      flex-flow: column;
+      gap: 15px;
+    }
+    .footer-newsletter > h1 {
+    	color: #eee;
+    	font-size: 22px;
+    	font-weight: 500;
+    }
+    .footer-newsletter > p {
+      color: #b2b2b2;
+      font-size: 15px;
+      font-weight: light;
+    }
+    .footer-newsletter > form {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+    .footer-newsletter > form > input {
+      padding: 10px 25px;
+      border-radius: var(--radius);
+      text-align: left;
+      font-size: 1rem;
+      font-weight: light;
+      background: transparent;
+      width: 100%;
+      outline: none;
+      border: none;
+      color: #eee;
+      border: 0.5px solid #999;
+    }
+    .footer-newsletter > form > input::placeholder {
+      color: #bbb;
+    }
+    .footer-newsletter > form > input:focus {
+    	border-color: var(--primary);
+    }
+    .footer-newsletter > form > button {
+      outline: none;
+      border: none;
+      padding: 10px 25px;
+      border-radius: var(--radius);
+      text-align: center;
+      color: var(--white);
+      background: var(--secondary);
+      font-size: 1.3rem;
+      font-weight: 500;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    .footer-newsletter > form > button:hover {
+      transform: translateY(-3px);
+      box-shadow: -4px 5px 15px var(--secondary);
+    }
+    .footer-newsletter > form > button > i {
+      color: var(--white);
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+    .footer-copyright > p {
+      text-align: center;
+      font-size: 15px;
+      font-weight: normal;
+      color: #b2b2b2;
+    }

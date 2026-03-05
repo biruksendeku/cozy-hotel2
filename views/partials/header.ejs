@@ -1,0 +1,84 @@
+ <header class="header">
+ 
+  <div class="header-1st-container">
+
+    
+      <div class="header-logo">
+       <a href="/">
+        <div class="logo-container">                                        <i class="fas fa-utensils"></i>
+        </div>                                                            <div class="logo-name">
+          <h1> Hotel Transylvania </h1>                                     <p> Warm Welcome Guests! </p>
+        </div>                                                           </a>
+      </div>
+
+      <div class="link-container">
+        <div class="header-main-link">
+          <button class="show-links" id="showLinks" type="button">
+            <i class="fas fa-bars"></i>
+          </button>
+          <button class="show-links" id="hideLinks" type="button">
+            <i class="fas fa-remove"></i>
+          </button>
+        </div>
+
+        <div class="header-search-button" id="headerSearchButton">
+          <button type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        
+        <div class="header-search" id="headerSearch" style="display: none;">
+            <form action="/search-foods" method="GET" id="search-form">
+              <div class="search-input-holder">
+                <input name="name" type="text" required
+                  id="search-input"
+                  placeholder="Search foods here...">
+              </div>
+              <button id="searchButton" type="submit">
+                <i class="fas fa-search"></i>
+                Search
+              </button>
+            </form>
+        </div>
+
+        <div class="header-links header-link5">
+            <a href="/cart">
+                <span class="carted-items">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartLenShow"> <%= cart.length || 0 %> </span>
+                </span>
+            </a>
+        </div>
+        
+      </div>
+    </div>
+
+  <div class="header-2nd-container" id="allOtherLinks" style="display: none;">
+    <div class="all-other-links">
+        <div>
+              <a href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+    
+              <a href="/delivery">
+                <i class="fas fa-truck"></i>
+                Delivery
+              </a>
+    
+              <a href="/contact">
+                <i class="fas fa-phone"></i>
+                Contact
+              </a>
+    
+              <a href="/service">
+                <i class="fas fa-robot"></i>
+                Support
+              </a>
+        </div>
+      </div> <!-- links end here -->
+
+
+    </div>
+
+  </header>
