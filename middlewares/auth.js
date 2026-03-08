@@ -1,3 +1,5 @@
+const ForbiddenError = require("./errors/forbiddenError");
+
 const isLoggedIn = (req, res, next) => {
 	try {
 		if(!req.isAuthenticated()) {
@@ -11,8 +13,8 @@ const isLoggedIn = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
 	try {
-		if(!req.user.isAdmin) {
-			return res.status(403).send('Forbidden');
+		if(!req.user || !req.user.isAdmin) {
+			return next(new ForbiddenError());
 		}
 		next();
 	} catch(err) {

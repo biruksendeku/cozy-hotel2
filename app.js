@@ -19,6 +19,8 @@ const {
   publicLimiter,
 } = require("./middlewares/limiters");
 const { isAdmin, isLoggedIn } = require("./middlewares/auth");
+const AppError = require("./middlewares/errors/appError");
+const NotFoundError = require("./middlewares/errors/notFoundError");
 const configureLocal = require("./config/Local");
 const configureGoogle = require("./config/Google");
 const configureFacebook = require("./config/Facebook");
@@ -68,20 +70,24 @@ app.use("/", isLoggedIn, isAdmin, adminRoutes());
 app.use("/", isLoggedIn, foodRoutes());
 
 app.use((req, res, next) => {
-  try {
-    res.status(404).send("<h1> 404 - Page Not Found </h1>");
-  } catch (err) {
-    next(err);
-  }
+  next(new NotFoundError("Route not found"));
 });
 
 app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
   if (process.env.NODE_ENV === "development") {
     console.log("Error Message: ", err.message);
     console.log("Error Stack: ", err.stack);
-    return res.status(500).send("Internal Server Error");
   }
-  res.json({ error: err.message });
+
+  const isAppError = err instanceof AppError;
+  const statusCode = isAppError ? err.statusCode : 500;
+  const message = isAppError ? err.message : "Internal Server Error";
+
+  res.status(statusCode).json({ error: message });
 });
 
 module.exports = app;

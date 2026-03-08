@@ -1,6 +1,8 @@
 const { body, validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 
 const Food = require('../models/Food');
+const BadRequestError = require('../middlewares/errors/badRequestError');
 // const Order = require('../models/Order');
 // const User = require('../models/User');
 // const isLoggedIn = require('../middlewares/auth');
@@ -31,8 +33,14 @@ module.exports = function foodRoutes() {
 
 	router.post('/add-to-cart', async (req, res, next) => {
 		try {
-
-			const id = req.body.foodId.toString().trim();
+			const foodId = req.body && req.body.foodId;
+			if (typeof foodId !== 'string' || !foodId.trim()) {
+				throw new BadRequestError('Food ID is required');
+			}
+			const id = foodId.trim();
+			if (!mongoose.isValidObjectId(id)) {
+				throw new BadRequestError('Invalid food ID');
+			}
 			
 			const food = await Food.findById(id);
 			if(!food) {
