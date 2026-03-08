@@ -1,0 +1,14 @@
+* text=auto
+
+# Treat common media and archive files as binary
+*.png binary
+*.jpg binary
+*.pdf binary
+*.zip binary
+*.exe binary
+
+# Show smarter context headers in git diff
+*.ejs diff=html
+*.js diff=javascript
+*.html diff=html
+*.css diff=css
