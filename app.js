@@ -9,7 +9,7 @@ const compression = require("compression");
 const path = require("path");
 
 const authRoutes = require("./routes/auth");
-// const apiRoutes = require('./routes/api');
+const apiRoutes = require("./routes/api");
 const adminRoutes = require("./routes/admin");
 const foodRoutes = require("./routes/food");
 const sessionMiddleware = require("./middlewares/session");
@@ -62,33 +62,9 @@ configureFacebook(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-/*
-app.delete('/foods/:id', async (req, res, next) => {
-	try {
-		const id = req.params.id.toString();
-		Food.findByIdAndDelete(id)
-		.then(() => {
-			res.json({
-				message: "Food Deleted",
-				id
-			})
-		})
-		.catch((err) => {
-			res.json({
-				message: "Failed to Delete food",
-				error: err.message,
-				id
-			});
-		});
-	} catch(err) {
-		next(err);
-	}
-});
-*/
-
 app.use("/", authRoutes(passport));
-// app.use('/', apiRoutes());
-app.use("/", /*isLoggedIn, isAdmin,*/ adminRoutes());
+app.use("/", apiRoutes());
+app.use("/", isLoggedIn, isAdmin, adminRoutes());
 app.use("/", isLoggedIn, foodRoutes());
 
 app.use((req, res, next) => {
