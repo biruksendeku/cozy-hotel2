@@ -1,4 +1,4 @@
-const Order = require('../models/Order');
+const Order = require('../models/order');
 
 // Helper: Calculate percentage safely
 const calculatePercentage = (current, previous) => {
