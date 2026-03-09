@@ -1,9 +1,9 @@
-require("dotenv").config();
+require("dotenv").config({ path: "./.env" });
 
-const connectDb = require("./utils/connectDb");
+const connectDb = require("./src/utils/connectDb");
 connectDb();
 
-const app = require("./app");
+const app = require("./src/app");
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {

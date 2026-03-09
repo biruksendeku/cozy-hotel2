@@ -10,15 +10,15 @@ const authRoutes = require("./routes/auth");
 const apiRoutes = require("./routes/api");
 const adminRoutes = require("./routes/admin");
 const foodRoutes = require("./routes/food");
-const sessionMiddleware = require("./middlewares/session");
+const sessionMiddleware = require("../middlewares/session");
 const {
   authLimiter,
   apiLimiter,
   publicLimiter,
-} = require("./middlewares/limiters");
-const { isAdmin, isLoggedIn } = require("./middlewares/auth");
-const AppError = require("./middlewares/errors/appError");
-const NotFoundError = require("./middlewares/errors/notFoundError");
+} = require("../middlewares/limiters");
+const { isAdmin, isLoggedIn } = require("../middlewares/auth");
+const AppError = require("../middlewares/errors/appError");
+const NotFoundError = require("../middlewares/errors/notFoundError");
 const configureLocal = require("./config/passport/local");
 const configureGoogle = require("./config/passport/google");
 const configureFacebook = require("./config/passport/facebook");

@@ -2,7 +2,7 @@ const { body, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 
 const Food = require("../models/food");
-const BadRequestError = require("../middlewares/errors/badRequestError");
+const BadRequestError = require("../../middlewares/errors/badRequestError");
 // const Order = require("../models/order");
 // const User = require("../models/user");
 // const isLoggedIn = require("../middlewares/auth");
