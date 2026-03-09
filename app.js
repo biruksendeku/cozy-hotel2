@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const express = require("express");
 const passport = require("passport");
 const flash = require("connect-flash");
@@ -21,9 +19,9 @@ const {
 const { isAdmin, isLoggedIn } = require("./middlewares/auth");
 const AppError = require("./middlewares/errors/appError");
 const NotFoundError = require("./middlewares/errors/notFoundError");
-const configureLocal = require("./config/Local");
-const configureGoogle = require("./config/Google");
-const configureFacebook = require("./config/Facebook");
+const configureLocal = require("./config/passport/local");
+const configureGoogle = require("./config/passport/google");
+const configureFacebook = require("./config/passport/facebook");
 
 const app = express();
 const publicFolder = path.join(__dirname, "public");
