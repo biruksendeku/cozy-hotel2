@@ -15,3 +15,9 @@ A hotel food-ordering web application built with Express, EJS, and MongoDB. It i
    ```
 
 Use `npm start` to start the server without nodemon. The app uses the `PORT` environment variable, defaulting to `3000`.
+
+## Application structure
+
+- `src/routes/` defines URLs and attaches middleware and validation.
+- `src/controllers/` contains request handlers grouped by feature (`auth`, `api`, `food`, and `admin`).
+- `src/controllers/email.js` provides the email-sending functions used by the auth and API controllers.
