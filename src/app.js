@@ -11,11 +11,11 @@ const apiRoutes = require("./routes/api");
 const adminRoutes = require("./routes/admin");
 const foodRoutes = require("./routes/food");
 const sessionMiddleware = require("./middlewares/session");
-const {
-  authLimiter,
-  apiLimiter,
-  publicLimiter,
-} = require("./middlewares/limiters");
+// const {
+//   authLimiter,
+//   apiLimiter,
+//   publicLimiter,
+// } = require("./middlewares/limiters");
 const { isAdmin, isLoggedIn } = require("./middlewares/auth");
 const AppError = require("./middlewares/errors/appError");
 const NotFoundError = require("./middlewares/errors/notFoundError");
