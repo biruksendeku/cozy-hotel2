@@ -1,17 +1,18 @@
 const nodemailer = require("nodemailer");
+const { EMAIL_USER, EMAIL_PASS, BASE_URL } = process.env;
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: EMAIL_USER,
+    pass: EMAIL_PASS,
   },
 });
 
 async function sendVerificationEmail(email, token) {
-  const verificationUrl = `${process.env.BASE_URL}/api/verify/email/${token}`;
+  const verificationUrl = `${BASE_URL}/api/verify/email/${token}`;
   await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+    from: EMAIL_USER,
     to: email,
     subject: "Verify Your Email",
     html: `
@@ -24,9 +25,9 @@ async function sendVerificationEmail(email, token) {
 }
 
 async function resetApprovalEmail(email, token) {
-  const resetUrl = `${process.env.BASE_URL}/api/request/reset/approve/password/${token}`;
+  const resetUrl = `${BASE_URL}/api/request/reset/approve/password/${token}`;
   await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+    from: EMAIL_USER,
     to: email,
     subject: "Approve Password Reset",
     html: `
