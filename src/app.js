@@ -32,7 +32,7 @@ app.set("view cache", false);
 app.use(
   compression({
     level: 6,
-    treshold: 1024,
+    threshold: 1024,
   }),
 );
 app.use(express.json());
