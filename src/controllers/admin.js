@@ -527,7 +527,7 @@ async function createFood(req, res, next) {
       !preparationTime ||
       !foodInfo
     ) {
-      return res.status(429).send("Missing Important Food Metadata");
+      return req.flash("error", "Missing Important Food Metadata");
     }
     if (!req.file) {
       req.flash("error", "Food Image is required");
