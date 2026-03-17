@@ -171,7 +171,6 @@ async function listOrders(req, res) {
 
     let filter = {};
     if (statusFilter) filter.status = statusFilter;
-    if (searchQuery) filter.foodName = { $regex: searchQuery, $options: "i" };
 
     let sort = {};
     if (sortBy === "newest") sort = { createdAt: -1 };
