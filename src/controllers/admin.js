@@ -698,13 +698,8 @@ async function deleteFood(req, res, next) {
             	`);
     }
 
-    Food.findByIdAndDelete(id)
-      .then(() => {
-        res.redirect("/admin/foods#foods");
-      })
-      .catch((err) => {
-        res.status(400).send("Failed to Delete the Food Item", err.message);
-      });
+    await Food.findByIdAndDelete(id);
+    res.redirect("/admin/foods#foods");
   } catch (err) {
     next(err);
   }
