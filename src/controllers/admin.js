@@ -668,7 +668,10 @@ async function updateFood(req, res, next) {
     }
     await food.save();
 
-    const deleteResult = await cloudinary.uploader.destroy(pastImagePublicId);
+    let deleteResult;
+    if (req.file) {
+      deleteResult = await cloudinary.uploader.destroy(pastImagePublicId);
+    }
     if (deleteResult.result === "ok") {
       console.log(`The previous image of food item: ${food.name} is Deleted!`);
     } else {
