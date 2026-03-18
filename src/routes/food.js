@@ -1,12 +1,6 @@
 const { body } = require("express-validator");
-
 const foodController = require("../controllers/food");
-const isLoggedIn = (req, res, next) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect("/auth/login");
-  }
-  next();
-};
+const { isLoggedIn } = require("../middlewares/auth");
 
 module.exports = function foodRoutes() {
   const router = require("express").Router();
