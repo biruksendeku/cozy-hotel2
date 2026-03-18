@@ -116,14 +116,17 @@ function removeFromCart(req, res, next) {
 async function checkout(req, res, next) {
   try {
     const cart = req.session.cart || [];
-    for (const item of cart) {
-      await Order.create({
-        foodId: item.id,
-        orderedBy: req.user._id,
-        totalAmount: item.price * item.quantity,
-        itemCount: item.quantity,
-      });
+    if (cart.length === 0) {
+      return res.send("Empty cart");
     }
+    const orders = cart.map((item) => ({
+      foodId: item.id,
+      orderedBy: req.user._id,
+      totalAmount: item.price * item.quantity,
+      itemCount: item.quantity,
+    }));
+
+    await Order.insertMany(orders);
 
     req.session.cart = [];
     res.render("success", { message: "Order placed successfully!" });
