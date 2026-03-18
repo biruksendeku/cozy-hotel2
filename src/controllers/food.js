@@ -134,7 +134,8 @@ async function checkout(req, res, next) {
 
 async function searchFoods(req, res, next) {
   try {
-    const searchName = req.query.name || "";
+    let searchName = req.query.name || "";
+    searchName = searchName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const filter = searchName.trim()
       ? { name: { $regex: searchName.trim(), $options: "i" } }
       : {};
