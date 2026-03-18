@@ -143,7 +143,7 @@ async function listFoods(req, res, next) {
       (sum, food) => sum + (food.rating || 0),
       0,
     );
-    const averageRating = totalRating / totalFoods;
+    const averageRating = totalFoods ? totalRating / totalFoods : 0;
 
     res.render("admin/foods", {
       foods: foods,
