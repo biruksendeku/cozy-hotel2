@@ -4,6 +4,14 @@ const Food = require("../models/food");
 const Order = require("../models/order");
 const User = require("../models/user");
 const cloudinary = require("../config/cloudinary");
+const {
+  startOfToday,
+  startOfYesterday,
+  endOfYesterday,
+  weekBounds,
+  monthBounds,
+  yearBounds,
+} = require("../utils/timeline");
 
 function calculatePercentage(currentData, previousData) {
   if (previousData === 0) return 0;
@@ -22,13 +30,10 @@ async function renderDashboard(req, res, next) {
       createdAt: -1,
     });
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    yesterday.setHours(0, 0, 0, 0);
-    const yesterdayEnd = new Date(yesterday);
-    yesterdayEnd.setHours(23, 59, 59, 999);
+    const now = new Date();
+    const today = startOfToday(now);
+    const yesterday = startOfYesterday(now);
+    const yesterdayEnd = endOfYesterday(now);
 
     const todayOrders = await Order.countDocuments({
       status: "completed",
@@ -186,13 +191,10 @@ async function listOrders(req, res) {
     const totalOrders = await Order.countDocuments(filter);
     const totalPages = Math.ceil(totalOrders / limit);
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    yesterday.setHours(0, 0, 0, 0);
-    const yesterdayEnd = new Date(yesterday);
-    yesterdayEnd.setHours(23, 59, 59, 999);
+    const now = new Date();
+    const today = startOfToday(now);
+    const yesterday = startOfYesterday(now);
+    const yesterdayEnd = new Date(today.getTime() - 1);
 
     const todayOrders = await Order.countDocuments({
       status: "completed",
@@ -203,14 +205,11 @@ async function listOrders(req, res) {
       createdAt: { $gte: yesterday, $lte: yesterdayEnd },
     });
 
-    const weekStart = new Date();
-    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-    weekStart.setHours(0, 0, 0, 0);
-    const lastWeekStart = new Date(weekStart);
-    lastWeekStart.setDate(lastWeekStart.getDate() - 7);
-    const lastWeekEnd = new Date(weekStart);
-    lastWeekEnd.setDate(lastWeekEnd.getDate() - 1);
-    lastWeekEnd.setHours(23, 59, 59, 999);
+    const {
+      start: weekStart,
+      previousStart: lastWeekStart,
+      previousEnd: lastWeekEnd,
+    } = weekBounds(now);
     const thisWeekOrders = await Order.countDocuments({
       status: "completed",
       createdAt: { $gte: weekStart },
@@ -220,18 +219,11 @@ async function listOrders(req, res) {
       createdAt: { $gte: lastWeekStart, $lte: lastWeekEnd },
     });
 
-    const now = new Date();
-    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-    const lastMonthEnd = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      0,
-      23,
-      59,
-      59,
-      999,
-    );
+    const {
+      start: monthStart,
+      previousStart: lastMonthStart,
+      previousEnd: lastMonthEnd,
+    } = monthBounds(now);
     const thisMonthOrders = await Order.countDocuments({
       status: "completed",
       createdAt: { $gte: monthStart },
@@ -241,15 +233,11 @@ async function listOrders(req, res) {
       createdAt: { $gte: lastMonthStart, $lte: lastMonthEnd },
     });
 
-    const yearStart = new Date();
-    yearStart.setMonth(0, 1);
-    yearStart.setHours(0, 0, 0, 0);
-    const lastYearStart = new Date();
-    lastYearStart.setFullYear(lastYearStart.getFullYear() - 1, 0, 1);
-    lastYearStart.setHours(0, 0, 0, 0);
-    const lastYearEnd = new Date();
-    lastYearEnd.setFullYear(lastYearEnd.getFullYear() - 1, 11, 31);
-    lastYearEnd.setHours(23, 59, 59, 999);
+    const {
+      start: yearStart,
+      previousStart: lastYearStart,
+      previousEnd: lastYearEnd,
+    } = yearBounds(now);
     const thisYearOrders = await Order.countDocuments({
       status: "completed",
       createdAt: { $gte: yearStart },
@@ -316,13 +304,10 @@ async function listOrders(req, res) {
 
 async function renderRevenue(req, res, next) {
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    yesterday.setHours(0, 0, 0, 0);
-    const yesterdayEnd = new Date(yesterday);
-    yesterdayEnd.setHours(23, 59, 59, 999);
+    const now = new Date();
+    const today = startOfToday(now);
+    const yesterday = startOfYesterday(now);
+    const yesterdayEnd = endOfYesterday(now);
 
     const todayRevenue = await Order.aggregate([
       { $match: { status: "completed", createdAt: { $gte: today } } },
@@ -338,14 +323,11 @@ async function renderRevenue(req, res, next) {
       { $group: { _id: null, total: { $sum: "$totalAmount" } } },
     ]);
 
-    const weekStart = new Date();
-    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-    weekStart.setHours(0, 0, 0, 0);
-    const lastWeekStart = new Date(weekStart);
-    lastWeekStart.setDate(lastWeekStart.getDate() - 7);
-    const lastWeekEnd = new Date(weekStart);
-    lastWeekEnd.setDate(lastWeekEnd.getDate() - 1);
-    lastWeekEnd.setHours(23, 59, 59, 999);
+    const {
+      start: weekStart,
+      previousStart: lastWeekStart,
+      previousEnd: lastWeekEnd,
+    } = weekBounds(now);
     const thisWeekRevenue = await Order.aggregate([
       { $match: { status: "completed", createdAt: { $gte: weekStart } } },
       { $group: { _id: null, total: { $sum: "$totalAmount" } } },
@@ -360,18 +342,11 @@ async function renderRevenue(req, res, next) {
       { $group: { _id: null, total: { $sum: "$totalAmount" } } },
     ]);
 
-    const now = new Date();
-    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-    const lastMonthEnd = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      0,
-      23,
-      59,
-      59,
-      999,
-    );
+    const {
+      start: monthStart,
+      previousStart: lastMonthStart,
+      previousEnd: lastMonthEnd,
+    } = monthBounds(now);
     const thisMonthRevenue = await Order.aggregate([
       { $match: { status: "completed", createdAt: { $gte: monthStart } } },
       { $group: { _id: null, total: { $sum: "$totalAmount" } } },
@@ -386,15 +361,11 @@ async function renderRevenue(req, res, next) {
       { $group: { _id: null, total: { $sum: "$totalAmount" } } },
     ]);
 
-    const yearStart = new Date();
-    yearStart.setMonth(0, 1);
-    yearStart.setHours(0, 0, 0, 0);
-    const lastYearStart = new Date();
-    lastYearStart.setFullYear(lastYearStart.getFullYear() - 1, 0, 1);
-    lastYearStart.setHours(0, 0, 0, 0);
-    const lastYearEnd = new Date();
-    lastYearEnd.setFullYear(lastYearEnd.getFullYear() - 1, 11, 31);
-    lastYearEnd.setHours(23, 59, 59, 999);
+    const {
+      start: yearStart,
+      previousStart: lastYearStart,
+      previousEnd: lastYearEnd,
+    } = yearBounds(now);
     const thisYearRevenue = await Order.aggregate([
       { $match: { status: "completed", createdAt: { $gte: yearStart } } },
       { $group: { _id: null, total: { $sum: "$totalAmount" } } },
