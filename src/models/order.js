@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema(
     },
     orderId: {
       type: String,
-      default: new mongoose.Types.ObjectId(),
+      default: () => new mongoose.Types.ObjectId(),
     },
     orderedBy: {
       type: String,
