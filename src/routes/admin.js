@@ -1,19 +1,6 @@
 const { body } = require("express-validator");
 const adminController = require("../controllers/admin");
-
-const isLoggedIn = (req, res, next) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect("/auth/login");
-  }
-  next();
-};
-
-const isAdmin = (req, res, next) => {
-  if (!req.user.isAdmin) {
-    return res.status(403).send("Forbidden");
-  }
-  next();
-};
+const { isLoggedIn, isAdmin } = require("../middlewares/auth");
 
 const multer = require("multer");
 const storage = multer.memoryStorage();
@@ -35,18 +22,8 @@ module.exports = function adminRoutes() {
   const router = require("express").Router();
 
   router.get("/admin", isLoggedIn, isAdmin, adminController.renderDashboard);
-  router.get(
-    "/admin/foods",
-    isLoggedIn,
-    isAdmin,
-    adminController.listFoods,
-  );
-  router.get(
-    "/admin/orders",
-    isLoggedIn,
-    isAdmin,
-    adminController.listOrders,
-  );
+  router.get("/admin/foods", isLoggedIn, isAdmin, adminController.listFoods);
+  router.get("/admin/orders", isLoggedIn, isAdmin, adminController.listOrders);
   router.get(
     "/admin/revenue",
     isLoggedIn,
