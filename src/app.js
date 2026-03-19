@@ -3,7 +3,6 @@ const passport = require("passport");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
-
 const path = require("path");
 
 const authRoutes = require("./routes/auth");
@@ -18,12 +17,17 @@ const NotFoundError = require("./middlewares/errors/notFoundError");
 const configureLocal = require("./config/passport/local");
 const configureGoogle = require("./config/passport/google");
 const configureFacebook = require("./config/passport/facebook");
+const { NODE_ENV } = process.env;
 
 const app = express();
 const publicFolder = path.join(__dirname, "public");
 
 app.set("view engine", "ejs");
-app.set("view cache", false);
+if (NODE_ENV === "production") {
+  app.set("view cache", true);
+} else {
+  app.set("view cache", false);
+}
 
 app.use(
   compression({
