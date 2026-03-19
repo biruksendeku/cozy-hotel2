@@ -416,7 +416,6 @@ async function renderRevenue(req, res, next) {
 
 async function renderCreateFood(req, res, next) {
   try {
-    const foods = await Food.find();
     const totalFoods = await Food.countDocuments();
     const ratings = await Food.find({}, "rating");
     const totalRating = ratings.reduce(
@@ -427,7 +426,6 @@ async function renderCreateFood(req, res, next) {
     const popularDishes = await Food.countDocuments({ category: "popular" });
 
     res.render("admin/create", {
-      foods: foods,
       totalFoods: totalFoods,
       averageRating: averageRating,
       popularDishes: popularDishes,
