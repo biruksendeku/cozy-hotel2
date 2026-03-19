@@ -11,11 +11,7 @@ const apiRoutes = require("./routes/api");
 const adminRoutes = require("./routes/admin");
 const foodRoutes = require("./routes/food");
 const sessionMiddleware = require("./middlewares/session");
-// const {
-//   authLimiter,
-//   apiLimiter,
-//   publicLimiter,
-// } = require("./middlewares/limiters");
+const { authLimiter, apiLimiter } = require("./middlewares/limiters");
 const { isAdmin, isLoggedIn } = require("./middlewares/auth");
 const AppError = require("./middlewares/errors/appError");
 const NotFoundError = require("./middlewares/errors/notFoundError");
@@ -63,6 +59,8 @@ configureFacebook(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use("/auth", authLimiter);
+app.use("/api", apiLimiter);
 app.use("/", authRoutes(passport));
 app.use("/", apiRoutes());
 app.use("/", isLoggedIn, isAdmin, adminRoutes());
