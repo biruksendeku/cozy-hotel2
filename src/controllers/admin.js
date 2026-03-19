@@ -151,7 +151,11 @@ async function listFoods(req, res, next) {
       .limit(limit)
       .lean();
     const totalPages = Math.ceil(totalFoods / limit);
-    const ratings = await Food.find({}, "rating");
+    const [result] = await Food.aggregate([
+      { $group: { _id: null, avg: { $avg: "$rating" } } },
+    ]);
+
+    const ratings = result?.avg ?? 0;
     const totalRating = ratings.reduce(
       (sum, food) => sum + (food.rating || 0),
       0,
