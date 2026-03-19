@@ -39,6 +39,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(publicFolder));
 app.use(cookieParser());
+app.use(helmet());
 app.use(sessionMiddleware);
 app.use(flash());
 app.use((req, res, next) => {
