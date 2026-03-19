@@ -19,6 +19,14 @@ function calculatePercentage(currentData, previousData) {
   return percentage;
 }
 
+async function sumRevenue(match) {
+  const [result] = await Order.aggregate([
+    { $match: { ...match, status: "completed" } },
+    { $group: { _id: null, total: { $sum: "$totalAmount" } } },
+  ]);
+  return result?.total || 0;
+}
+
 async function renderDashboard(req, res, next) {
   try {
     const totalCustomers = await User.countDocuments({});
@@ -309,89 +317,47 @@ async function renderRevenue(req, res, next) {
     const yesterday = startOfYesterday(now);
     const yesterdayEnd = endOfYesterday(now);
 
-    const todayRevenue = await Order.aggregate([
-      { $match: { status: "completed", createdAt: { $gte: today } } },
-      { $group: { _id: null, total: { $sum: "$totalAmount" } } },
-    ]);
-    const yesterdayRevenue = await Order.aggregate([
-      {
-        $match: {
-          status: "completed",
-          createdAt: { $gte: yesterday, $lte: yesterdayEnd },
-        },
-      },
-      { $group: { _id: null, total: { $sum: "$totalAmount" } } },
-    ]);
+    const todayRev = await sumRevenue({ createdAt: { $gte: today } });
+    const yesterdayRev = await sumRevenue({
+      createdAt: { $gte: yesterday, $lte: yesterdayEnd },
+    });
 
     const {
       start: weekStart,
       previousStart: lastWeekStart,
       previousEnd: lastWeekEnd,
     } = weekBounds(now);
-    const thisWeekRevenue = await Order.aggregate([
-      { $match: { status: "completed", createdAt: { $gte: weekStart } } },
-      { $group: { _id: null, total: { $sum: "$totalAmount" } } },
-    ]);
-    const lastWeekRevenue = await Order.aggregate([
-      {
-        $match: {
-          status: "completed",
-          createdAt: { $gte: lastWeekStart, $lte: lastWeekEnd },
-        },
-      },
-      { $group: { _id: null, total: { $sum: "$totalAmount" } } },
-    ]);
+    const thisWeekRev = await sumRevenue({
+      createdAt: { $gte: weekStart },
+    });
+    const lastWeekRev = await sumRevenue({
+      createdAt: { $gte: lastWeekStart, $lte: lastWeekEnd },
+    });
 
     const {
       start: monthStart,
       previousStart: lastMonthStart,
       previousEnd: lastMonthEnd,
     } = monthBounds(now);
-    const thisMonthRevenue = await Order.aggregate([
-      { $match: { status: "completed", createdAt: { $gte: monthStart } } },
-      { $group: { _id: null, total: { $sum: "$totalAmount" } } },
-    ]);
-    const lastMonthRevenue = await Order.aggregate([
-      {
-        $match: {
-          status: "completed",
-          createdAt: { $gte: lastMonthStart, $lte: lastMonthEnd },
-        },
-      },
-      { $group: { _id: null, total: { $sum: "$totalAmount" } } },
-    ]);
+    const thisMonthRev = await sumRevenue({
+      createdAt: { $gte: monthStart },
+    });
+    const lastMonthRev = await sumRevenue({
+      createdAt: { $gte: lastMonthStart, $lte: lastMonthEnd },
+    });
 
     const {
       start: yearStart,
       previousStart: lastYearStart,
       previousEnd: lastYearEnd,
     } = yearBounds(now);
-    const thisYearRevenue = await Order.aggregate([
-      { $match: { status: "completed", createdAt: { $gte: yearStart } } },
-      { $group: { _id: null, total: { $sum: "$totalAmount" } } },
-    ]);
-    const lastYearRevenue = await Order.aggregate([
-      {
-        $match: {
-          status: "completed",
-          createdAt: { $gte: lastYearStart, $lte: lastYearEnd },
-        },
-      },
-      { $group: { _id: null, total: { $sum: "$totalAmount" } } },
-    ]);
-    const allTimeRevenue = await Order.aggregate([
-      { $match: { status: "completed" } },
-      { $group: { _id: null, totalRevenue: { $sum: "$totalAmount" } } },
-    ]);
-
-    const todayRev = todayRevenue[0]?.total || 0;
-    const yesterdayRev = yesterdayRevenue[0]?.total || 0;
-    const thisWeekRev = thisWeekRevenue[0]?.total || 0;
-    const lastWeekRev = lastWeekRevenue[0]?.total || 0;
-    const thisMonthRev = thisMonthRevenue[0]?.total || 0;
-    const lastMonthRev = lastMonthRevenue[0]?.total || 0;
-    const thisYearRev = thisYearRevenue[0]?.total || 0;
-    const lastYearRev = lastYearRevenue[0]?.total || 0;
+    const thisYearRev = await sumRevenue({
+      createdAt: { $gte: yearStart },
+    });
+    const lastYearRev = await sumRevenue({
+      createdAt: { $gte: lastYearStart, $lte: lastYearEnd },
+    });
+    const allTimeRevenue = await sumRevenue({});
     const todayOrders = await Order.countDocuments({
       status: "completed",
       createdAt: { $gte: today },
@@ -439,7 +405,7 @@ async function renderRevenue(req, res, next) {
           isIncrease: calculatePercentage(thisYearRev, lastYearRev) >= 0,
           orderCount: thisYearOrders,
         },
-        allTime: allTimeRevenue[0]?.totalRevenue || 0,
+        allTime: allTimeRevenue,
       },
       period: req.query.period || "daily",
     });
