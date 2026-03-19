@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Food = require("../models/food");
 const Order = require("../models/order");
 const BadRequestError = require("../middlewares/errors/badRequestError");
+const NotFoundError = require("../middlewares/errors/notFoundError");
 
 const MAX_ITEM_QUANTITY = 20;
 
@@ -35,6 +36,7 @@ async function addToCart(req, res, next) {
     const food = await Food.findById(id);
     if (!food) {
       return res.json({ success: false, message: "Out of stock" });
+      throw new NotFoundError("Item");
     }
 
     const existingFood = req.session.cart.find((item) => item.id === id);
