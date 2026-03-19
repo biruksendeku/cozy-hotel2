@@ -5,6 +5,8 @@ const Food = require("../models/food");
 const Order = require("../models/order");
 const BadRequestError = require("../middlewares/errors/badRequestError");
 
+const MAX_ITEM_QUANTITY = 20;
+
 async function listFoods(req, res, next) {
   try {
     const foods = await Food.find();
@@ -37,6 +39,12 @@ async function addToCart(req, res, next) {
 
     const existingFood = req.session.cart.find((item) => item.id === id);
     if (existingFood) {
+      if (existingFood.quantity >= MAX_ITEM_QUANTITY) {
+        return res.json({
+          success: false,
+          message: `You can add up to ${MAX_ITEM_QUANTITY} of this item`,
+        });
+      }
       existingFood.quantity += 1;
     } else {
       req.session.cart.push({
@@ -92,6 +100,12 @@ function updateCart(req, res, next) {
     if (food) {
       if (quantity <= 0) {
         req.session.cart = req.session.cart.filter((item) => item.id !== id);
+      } else if (quantity > MAX_ITEM_QUANTITY) {
+        req.flash(
+          "error",
+          `You can add up to ${MAX_ITEM_QUANTITY} of each item`,
+        );
+        return res.redirect("/cart");
       } else {
         food.quantity = quantity;
       }
