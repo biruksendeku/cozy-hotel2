@@ -1,7 +1,10 @@
 {
-  "name": "hotel3",
+  "name": "cozy-hotel",
   "version": "1.0.0",
-  "description": "",
+  "description": "A hotel food-ordering web application built with Express, EJS, and MongoDB.",
+  "engines": {
+    "node": ">=18"
+  },
   "license": "MIT",
   "author": "DevYay",
   "type": "commonjs",
