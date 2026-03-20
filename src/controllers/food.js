@@ -13,8 +13,8 @@ async function listFoods(req, res, next) {
     const foods = await Food.find();
     res.render("home", {
       foods,
-      title: " Hotel Transylvania | Home Page ",
-      tagline: " Warm Welcome Guests! ",
+      title: "Hotel Transylvania | Home Page",
+      tagline: "Warm Welcome Guests!",
     });
   } catch (err) {
     next(err);
