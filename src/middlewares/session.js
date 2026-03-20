@@ -1,6 +1,6 @@
 const session = require("express-session");
 const { MongoStore } = require("connect-mongo");
-const { SESSION_SECRET_KEY, MONGODB_URI, NODE_ENV } = process.env;
+const { SESSION_SECRET_KEY, MONGODB_URI } = process.env;
 
 const sessionMiddleware = session({
   secret: SESSION_SECRET_KEY,
@@ -16,8 +16,8 @@ const sessionMiddleware = session({
   rolling: true,
   cookie: {
     httpOnly: true,
-    secure: NODE_ENV !== "development",
-    sameSite: NODE_ENV !== "development" ? "none" : "lax",
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   },
 });
