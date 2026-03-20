@@ -57,4 +57,6 @@ const foodSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+foodSchema.index({ name: 1 });
+
 module.exports = mongoose.model("Food", foodSchema);
