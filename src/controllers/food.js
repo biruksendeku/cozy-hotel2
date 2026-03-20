@@ -5,8 +5,8 @@ const Food = require("../models/food");
 const Order = require("../models/order");
 const BadRequestError = require("../middlewares/errors/badRequestError");
 const NotFoundError = require("../middlewares/errors/notFoundError");
-
-const MAX_ITEM_QUANTITY = 20;
+let { MAX_ITEM_QUANTITY } = process.env;
+MAX_ITEM_QUANTITY = parseInt(MAX_ITEM_QUANTITY);
 
 async function listFoods(req, res, next) {
   try {
