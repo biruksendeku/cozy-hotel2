@@ -16,7 +16,6 @@ const AppError = require("./middlewares/errors/appError");
 const NotFoundError = require("./middlewares/errors/notFoundError");
 const configureLocal = require("./config/passport/local");
 const configureGoogle = require("./config/passport/google");
-const configureFacebook = require("./config/passport/facebook");
 const { NODE_ENV } = process.env;
 
 const app = express();
@@ -58,7 +57,6 @@ app.use((req, res, next) => {
 
 configureLocal(passport);
 configureGoogle(passport);
-configureFacebook(passport);
 
 app.use(passport.initialize());
 app.use(passport.session());
