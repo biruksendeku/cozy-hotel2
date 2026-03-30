@@ -10,7 +10,11 @@ module.exports = function authRoutes(passport) {
   router.post(
     "/auth/signup",
     [
-      body("name").escape().trim().notEmpty().withMessage("Name field required"),
+      body("name")
+        .escape()
+        .trim()
+        .notEmpty()
+        .withMessage("Name field required"),
       body("email")
         .escape()
         .trim()
@@ -66,19 +70,6 @@ module.exports = function authRoutes(passport) {
   router.get(
     "/auth/google/callback",
     passport.authenticate("google", {
-      failureRedirect: "/auth/login",
-      successRedirect: "/",
-    }),
-  );
-
-  router.get(
-    "/auth/facebook",
-    passport.authenticate("facebook", { scope: ["profile", "email"] }),
-  );
-
-  router.get(
-    "/auth/facebook/callback",
-    passport.authenticate("facebook", {
       failureRedirect: "/auth/login",
       successRedirect: "/",
     }),
