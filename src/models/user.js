@@ -49,7 +49,6 @@ const userSchema = new mongoose.Schema(
       default: [],
     },
     googleId: String,
-    facebookId: String,
     verificationToken: String,
     verificationDate: Date,
     resetToken: String,
