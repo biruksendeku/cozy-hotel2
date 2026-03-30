@@ -3,6 +3,7 @@ const passport = require("passport");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
+const helmet = require("helmet");
 const path = require("path");
 
 const authRoutes = require("./routes/auth");
