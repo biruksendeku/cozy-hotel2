@@ -349,12 +349,6 @@
     .social-google {
       background: linear-gradient(135deg, #4285F4 0%, #34A853 100%);
     }
-    .social-facebook {
-      background: linear-gradient(135deg, #1877F2 0%, #0D6EFD 100%);
-    }
-    .social-twitter {
-      background: linear-gradient(135deg, #1DA1F2 0%, #0D95E8 100%);
-    }
 
     @media (max-width: 500px) {
       .form__section {
