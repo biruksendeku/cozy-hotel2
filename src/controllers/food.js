@@ -5,6 +5,7 @@ const Food = require("../models/food");
 const Order = require("../models/order");
 const BadRequestError = require("../middlewares/errors/badRequestError");
 const NotFoundError = require("../middlewares/errors/notFoundError");
+const { PAGE_TITLES, PAGE_TAGLINES } = require("../constants/pageContent");
 let { MAX_ITEM_QUANTITY } = process.env;
 MAX_ITEM_QUANTITY = parseInt(MAX_ITEM_QUANTITY);
 
@@ -13,8 +14,8 @@ async function listFoods(req, res, next) {
     const foods = await Food.find();
     res.render("home", {
       foods,
-      title: "Hotel Transylvania | Home Page",
-      tagline: "Warm Welcome Guests!",
+      title: PAGE_TITLES.HOME,
+      tagline: PAGE_TAGLINES.HOME,
     });
   } catch (err) {
     next(err);
@@ -78,7 +79,7 @@ function renderCart(req, res, next) {
     res.render("cart", {
       cart,
       total: total.toFixed(2),
-      title: "Hotel Transylvania | Warm Welcome",
+      title: PAGE_TITLES.CART,
     });
   } catch (err) {
     next(err);
@@ -167,7 +168,7 @@ async function searchFoods(req, res, next) {
 
 function renderUserGuide(req, res) {
   res.render("user-guide", {
-    title: "User Guide - Hotel Transylvania",
+    title: PAGE_TITLES.USER_GUIDE,
     cart: req.session.cart || [],
     user: req.user || null,
   });
