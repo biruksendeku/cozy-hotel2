@@ -80,20 +80,31 @@ async function renderDashboard(req, res, next) {
     const dailyRevChange = calculatePercentage(todayRev, yesterdayRev);
     const topFoods = await Order.aggregate([
       { $match: { status: "completed" } },
-      { $unwind: "$items" },
       {
         $group: {
-          _id: "$items.foodId",
-          count: { $sum: "$items.quantity" },
-          totalRevenue: { $sum: "$items.price" },
+          _id: "$foodId",
+          count: { $sum: "$itemCount" },
+          totalRevenue: { $sum: "$totalAmount" },
         },
       },
       { $sort: { count: -1 } },
       { $limit: 3 },
       {
+        $addFields: {
+          foodObjectId: {
+            $convert: {
+              input: "$_id",
+              to: "objectId",
+              onError: null,
+              onNull: null,
+            },
+          },
+        },
+      },
+      {
         $lookup: {
           from: "foods",
-          localField: "_id",
+          localField: "foodObjectId",
           foreignField: "_id",
           as: "foodDetails",
         },
