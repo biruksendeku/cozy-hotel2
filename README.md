@@ -32,9 +32,6 @@ The application loads settings from `.env`. Use the exact names below; in partic
 | `GOOGLE_CLIENT_ID`      | Google OAuth client ID.                                                                                             |
 | `GOOGLE_CLIENT_SECRET`  | Google OAuth client secret; keep it private.                                                                        |
 | `GOOGLE_CALLBACK_URL`   | Google OAuth callback URL, typically ending in `/auth/google/callback`.                                             |
-| `FACEBOOK_APP_ID`       | Facebook OAuth app ID.                                                                                              |
-| `FACEBOOK_APP_SECRET`   | Facebook OAuth app secret; keep it private.                                                                         |
-| `FACEBOOK_CALLBACK_URL` | Facebook OAuth callback URL, typically ending in `/auth/facebook/callback`.                                         |
 | `EMAIL_USER`            | Gmail account used to send verification and password-reset emails.                                                  |
 | `EMAIL_PASS`            | Gmail app password for `EMAIL_USER`; keep it private.                                                               |
 | `BASE_URL`              | Application's public base URL, used to create links in emails.                                                      |
