@@ -22,13 +22,25 @@ module.exports = function configurePassport(passport) {
             req.flash("error", "Email not registered");
             return done(null, false);
           }
-          const lastUsedProviderRaw =
-            user.authProvider[user.authProvider.length - 1];
-          const lastUsedProvider = lastUsedProviderRaw.trim();
-          const provider =
-            lastUsedProvider.charAt(0).toUpperCase() +
-            lastUsedProvider.slice(1).toLowerCase();
           if (user.password === null) {
+            const authProviders = Array.isArray(user.authProvider)
+              ? user.authProvider
+              : [];
+            const lastUsedProviderRaw =
+              authProviders[authProviders.length - 1];
+            const lastUsedProvider =
+              typeof lastUsedProviderRaw === "string"
+                ? lastUsedProviderRaw.trim()
+                : "";
+
+            if (!lastUsedProvider) {
+              req.flash("error", "Use your sign-in provider or sign up");
+              return done(null, false);
+            }
+
+            const provider =
+              lastUsedProvider.charAt(0).toUpperCase() +
+              lastUsedProvider.slice(1).toLowerCase();
             req.flash(
               "error",
               `Signup or use your last Auth Provider ${provider}`,
