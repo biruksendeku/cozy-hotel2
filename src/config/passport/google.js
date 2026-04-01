@@ -11,9 +11,10 @@ module.exports = function configurePassportGoogle(passport) {
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
         callbackURL: GOOGLE_CALLBACK_URL,
+        passReqToCallback: true,
         profileFields: ["email", "displayName", "id", "avatar"],
       },
-      async (accessToken, refreshToken, profile, done) => {
+      async (req, accessToken, refreshToken, profile, done) => {
         try {
           const googleUser = await User.findOne({ googleId: profile.id });
           if (googleUser) {
@@ -21,23 +22,27 @@ module.exports = function configurePassportGoogle(passport) {
           }
 
           const email = profile.emails?.[0]?.value;
-          const normalizedEmail =
-            typeof email === "string" ? email.trim().toLowerCase() : null;
-          if (normalizedEmail) {
-            const existingUser = await User.findOne({
-              email: normalizedEmail,
-            });
-            if (existingUser) {
-              existingUser.googleId = profile.id;
-              if (!Array.isArray(existingUser.authProvider)) {
-                existingUser.authProvider = [];
-              }
-              if (!existingUser.authProvider.includes("google")) {
-                existingUser.authProvider.push("google");
-              }
-              await existingUser.save();
-              return done(null, existingUser);
+          if (typeof email !== "string" || !email.trim()) {
+            req.flash(
+              "error",
+              "Your Google account must provide an email address to sign in",
+            );
+            return done(null, false);
+          }
+          const normalizedEmail = email.trim().toLowerCase();
+          const existingUser = await User.findOne({
+            email: normalizedEmail,
+          });
+          if (existingUser) {
+            existingUser.googleId = profile.id;
+            if (!Array.isArray(existingUser.authProvider)) {
+              existingUser.authProvider = [];
             }
+            if (!existingUser.authProvider.includes("google")) {
+              existingUser.authProvider.push("google");
+            }
+            await existingUser.save();
+            return done(null, existingUser);
           }
 
           const newUser = new User({
