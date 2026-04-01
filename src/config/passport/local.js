@@ -40,6 +40,10 @@ module.exports = function configurePassport(passport) {
             req.flash("error", "Incorrect email or password");
             return done(null, false);
           }
+          if (!user.isVerified) {
+            req.flash("error", "Verify your email first");
+            return done(null, false);
+          }
           done(null, user);
         } catch (err) {
           done(err);
