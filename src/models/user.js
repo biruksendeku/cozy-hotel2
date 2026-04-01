@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
     },
     isAdmin: {
       type: Boolean,
-      default: true, // for the time being
+      default: false,
     },
     cart: {
       type: Array,
