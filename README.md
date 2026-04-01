@@ -16,6 +16,16 @@ A hotel food-ordering web application built with Express, EJS, and MongoDB. It i
 
 Use `npm start` to start the server without nodemon. The app uses the `PORT` environment variable, defaulting to `3000`.
 
+## Admin setup
+
+Set `ADMIN_EMAIL` to the email address of an existing, verified account, then run:
+
+```sh
+npm run seed:admin
+```
+
+The command grants that account admin privileges and exits; it does not create accounts or run automatically when the server starts.
+
 ## Environment variables
 
 The application loads settings from `.env`. Use the exact names below; in particular, the MongoDB setting is `MONGODB_URI` (not `MONGO_URI`).
@@ -24,6 +34,7 @@ The application loads settings from `.env`. Use the exact names below; in partic
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `NODE_ENV`              | Runtime environment. Set to `production` when deployed.                                                             |
 | `PORT`                  | HTTP port; defaults to `3000` if unset.                                                                             |
+| `ADMIN_EMAIL`           | Existing account email to promote when running `npm run seed:admin`.                                                |
 | `MONGODB_URI`           | MongoDB connection string used by the app and session store.                                                        |
 | `SESSION_SECRET_KEY`    | Secret used to sign session cookies. Set a long, random value and keep it private.                                  |
 | `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name used for image uploads.                                                                       |
