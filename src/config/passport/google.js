@@ -15,15 +15,36 @@ module.exports = function configurePassportGoogle(passport) {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          const user = await User.findOne({ googleId: profile.id });
-          if (user) {
-            return done(null, user);
+          const googleUser = await User.findOne({ googleId: profile.id });
+          if (googleUser) {
+            return done(null, googleUser);
           }
+
+          const email = profile.emails?.[0]?.value;
+          const normalizedEmail =
+            typeof email === "string" ? email.trim().toLowerCase() : null;
+          if (normalizedEmail) {
+            const existingUser = await User.findOne({
+              email: normalizedEmail,
+            });
+            if (existingUser) {
+              existingUser.googleId = profile.id;
+              if (!Array.isArray(existingUser.authProvider)) {
+                existingUser.authProvider = [];
+              }
+              if (!existingUser.authProvider.includes("google")) {
+                existingUser.authProvider.push("google");
+              }
+              await existingUser.save();
+              return done(null, existingUser);
+            }
+          }
+
           const newUser = new User({
             name: profile.displayName
               ? profile.displayName
               : `GoogleUser-${Date.now()}`,
-            email: profile.emails ? profile.emails[0]?.value : null,
+            email: normalizedEmail,
             googleId: profile.id,
             avatar: profile.photos ? profile.photos[0]?.value : null,
             isVerified: true,
