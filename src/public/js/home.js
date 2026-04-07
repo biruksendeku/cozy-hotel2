@@ -12,25 +12,11 @@ function escapeHtml(value) {
 }
 
 // Main function to add items to cart
-window.addToCart = function(foodItem) {
-    // Parse the food item safely
-    let food;
-    try {
-        food = typeof foodItem === 'string' ? JSON.parse(foodItem) : foodItem;
-    } catch (e) {
-        console.error('Error parsing food item:', e);
-        showNotification('Error adding item to cart', 'error');
+window.addToCart = function(foodId) {
+    if (typeof foodId !== 'string' || !foodId.trim()) {
+        showNotification('Failed to add item to cart', 'error');
         return;
     }
-
-    // Prepare cart data
-    const cartData = {
-        foodId: food._id || food.id,
-        name: food.name,
-        price: food.price,
-        quantity: 1,
-        imageUrl: food.imageUrl
-    };
 
     // Send POST request
     fetch('/add-to-cart', {
@@ -38,7 +24,7 @@ window.addToCart = function(foodItem) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(cartData)
+        body: JSON.stringify({ foodId: foodId.trim() })
     })
     .then(response => {
         if (!response.ok) throw new Error('Network response failed');
@@ -46,7 +32,7 @@ window.addToCart = function(foodItem) {
     })
     .then(data => {
         if (data.success) {
-            showNotification(`${food.name} added to cart!`, 'success');
+            showNotification(data.message || 'Item added to cart', 'success');
             updateCartCount(data.cartCount);
             
         } else {
@@ -215,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const foodName = escapeHtml(f.name);
       const foodPrice = escapeHtml(f.price);
       const foodId = escapeHtml(f._id);
-      const foodData = escapeHtml(JSON.stringify(f));
       
       foodsHTML += `
         <div class="foods-container" id="foods">
@@ -260,10 +245,10 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
               
               <div class="food-action">
-                <button class="add-to-cart" data-food="${foodData}">
+                <button class="add-to-cart" data-food-id="${foodId}">
                   <i class="fas fa-plus"></i>
                   Add to Cart
-                  <span class="added-show" data-food-id="${foodId}">
+                  <span class="added-show">
                     <i class="fas fa-check-circle"></i>
                   </span>
                 </button>
@@ -281,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function() {
     foodsContainer.addEventListener('click', event => {
       const button = event.target.closest('.add-to-cart');
       if (!button || !foodsContainer.contains(button)) return;
-      window.addToCart(JSON.parse(button.dataset.food));
+      window.addToCart(button.dataset.foodId);
     });
   }
   

@@ -101,10 +101,10 @@
                     </div>
 
                     <div class="food-action">
-                      <button class="add-to-cart" onclick='addToCart(<%= JSON.stringify(f) %>)'>
+                      <button class="add-to-cart" data-food-id="<%= f._id %>">
                         <i class="fas fa-plus"></i>
                         Add to Cart
-                        <span class="added-show" data-food-id="<%= f._id %>">
+                        <span class="added-show">
                           <i class="fas fa-check-circle"></i>
                         </span>
                       </button>
