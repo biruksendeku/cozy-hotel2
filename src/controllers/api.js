@@ -139,11 +139,11 @@ async function approvePasswordReset(req, res, next) {
         "error",
         "Email not registered, make sure you entered the correct email address",
       );
-      res.redirect("back");
+      return res.redirect("back");
     }
     if (!user.isVerified) {
       req.flash("error", "Unverified email, sign up and verify first");
-      res.redirect("back");
+      return res.redirect("back");
     }
 
     user.password = user.newPassword;
