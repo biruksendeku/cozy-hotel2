@@ -9,6 +9,7 @@ const {
   resetSuccessfulEmail,
 } = require("./email");
 const hashToken = require("../utils/hashToken");
+const NotFoundError = require("../middlewares/errors/notFoundError");
 
 async function verifyEmail(req, res, next) {
   try {
@@ -134,14 +135,15 @@ async function approvePasswordReset(req, res, next) {
       resetDate: { $gt: Date.now() },
     });
     if (!user) {
-      return res
-        .status(429)
-        .send(
-          "Email not registered, make sure you entered the correct email address",
-        );
+      req.flash(
+        "error",
+        "Email not registered, make sure you entered the correct email address",
+      );
+      res.redirect("back");
     }
     if (!user.isVerified) {
-      return res.status(429).send("Unverified email, sign up and verify first");
+      req.flash("error", "Unverified email, sign up and verify first");
+      res.redirect("back");
     }
 
     user.password = user.newPassword;
