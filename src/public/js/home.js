@@ -1,5 +1,16 @@
 // home.js - Handles cart operations without page refresh
 
+function escapeHtml(value) {
+    const entities = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+    };
+    return String(value == null ? '' : value).replace(/[&<>"']/g, character => entities[character]);
+}
+
 // Main function to add items to cart
 window.addToCart = function(foodItem) {
     // Parse the food item safely
@@ -195,18 +206,23 @@ document.addEventListener('DOMContentLoaded', function() {
     let foodsHTML = '';
     
     foods.forEach(f => {
-      const foodTag = (f.category || 'FRESH').toUpperCase();
-      const rating = f.rating || 4.5;
-      const calorie = f.calorie || 'N/A';
-      const prepTime = f.preparationTime || '15-20 min';
-      const foodInfo = f.foodInfo || 'Delicious fresh food prepared with care';
+      const foodTag = escapeHtml((f.category || 'FRESH').toUpperCase());
+      const rating = escapeHtml(f.rating || 4.5);
+      const calorie = escapeHtml(f.calorie || 'N/A');
+      const prepTime = escapeHtml(f.preparationTime || '15-20 min');
+      const foodInfo = escapeHtml(f.foodInfo || 'Delicious fresh food prepared with care');
+      const imageUrl = escapeHtml(f.imageUrl || '/images/default-food.jpg');
+      const foodName = escapeHtml(f.name);
+      const foodPrice = escapeHtml(f.price);
+      const foodId = escapeHtml(f._id);
+      const foodData = escapeHtml(JSON.stringify(f));
       
       foodsHTML += `
         <div class="foods-container" id="foods">
           <div class="menu-image-container">
             <span class="food-image-tag">${foodTag}</span>
             <div class="food-image">
-              <img src="${f.imageUrl || '/images/default-food.jpg'}" alt="${f.name}">
+              <img src="${imageUrl}" alt="${foodName}">
             </div>
             <span class="food-rating-tag">
               <i class="fas fa-star"></i>
@@ -217,10 +233,10 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="menu-data">
             <div class="food-data-container">
               <span class="food-name">
-                <h1>${f.name}</h1>
+                <h1>${foodName}</h1>
               </span>
               <span class="food-price">
-                <h1>$${f.price}</h1>
+                <h1>$${foodPrice}</h1>
               </span>
             </div>
             
@@ -244,10 +260,10 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
               
               <div class="food-action">
-                <button class="add-to-cart" onclick='addToCart(${JSON.stringify(f).replace(/'/g, "&apos;")})'>
+                <button class="add-to-cart" data-food="${foodData}">
                   <i class="fas fa-plus"></i>
                   Add to Cart
-                  <span class="added-show" data-food-id="${f._id}">
+                  <span class="added-show" data-food-id="${foodId}">
                     <i class="fas fa-check-circle"></i>
                   </span>
                 </button>
@@ -259,6 +275,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     foodsContainer.innerHTML = foodsHTML;
+  }
+
+  if (foodsContainer) {
+    foodsContainer.addEventListener('click', event => {
+      const button = event.target.closest('.add-to-cart');
+      if (!button || !foodsContainer.contains(button)) return;
+      window.addToCart(JSON.parse(button.dataset.food));
+    });
   }
   
 });
