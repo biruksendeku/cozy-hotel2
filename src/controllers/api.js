@@ -91,6 +91,10 @@ async function requestPasswordReset(req, res, next) {
       req.flash("error", "Email field required");
       return res.redirect("/api/reset/password");
     }
+    if (!newPassword) {
+      req.flash("error", "New password field required");
+      return res.redirect("/api/reset/password");
+    }
 
     const user = await User.findOne({ email });
     if (!user) {
@@ -102,7 +106,10 @@ async function requestPasswordReset(req, res, next) {
       return res.redirect("/api/reset/password");
     }
     if (user.password === null) {
-      req.flash("error", "Sign up or use your existing authentication provider");
+      req.flash(
+        "error",
+        "Sign up or use your existing authentication provider",
+      );
       return res.redirect("/api/reset/password");
     }
 
@@ -129,12 +136,12 @@ async function approvePasswordReset(req, res, next) {
     if (!user) {
       return res
         .status(429)
-        .send("Email not registered, make sure you entered the correct email address");
+        .send(
+          "Email not registered, make sure you entered the correct email address",
+        );
     }
     if (!user.isVerified) {
-      return res
-        .status(429)
-        .send("Unverified email, sign up and verify first");
+      return res.status(429).send("Unverified email, sign up and verify first");
     }
 
     user.password = user.newPassword;
