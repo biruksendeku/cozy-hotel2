@@ -1,6 +1,7 @@
 const { body } = require("express-validator");
 
 const apiController = require("../controllers/api");
+const { emailLimiter } = require("../middlewares/limiters");
 
 module.exports = function apiRoutes() {
   const router = require("express").Router();
@@ -13,6 +14,7 @@ module.exports = function apiRoutes() {
   );
   router.post(
     "/api/resend/verification/link",
+    emailLimiter,
     [
       body("email")
         .notEmpty()
@@ -27,6 +29,7 @@ module.exports = function apiRoutes() {
   router.get("/api/request/reset/password", apiController.renderPasswordReset);
   router.post(
     "/api/request/reset/approve/password",
+    emailLimiter,
     apiController.requestPasswordReset,
   );
   router.get(

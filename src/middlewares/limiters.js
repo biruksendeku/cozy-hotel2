@@ -1,4 +1,5 @@
 const rateLimit = require('express-rate-limit');
+const { ipKeyGenerator } = require('express-rate-limit');
 
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 mins
@@ -18,8 +19,22 @@ const publicLimiter = rateLimit({
 	message: 'Too many requests. Try again later.'
 });
 
+const emailLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000,
+	max: 3,
+	keyGenerator: (req) => {
+		const email = req.body && req.body.email;
+		if (typeof email === 'string' && email.trim()) {
+			return `email:${email.trim().toLowerCase()}`;
+		}
+		return `ip:${ipKeyGenerator(req.ip || '')}`;
+	},
+	message: 'Too many email requests. Try again later.'
+});
+
 module.exports = {
 	apiLimiter,
 	authLimiter,
-	publicLimiter
+	publicLimiter,
+	emailLimiter
 };
