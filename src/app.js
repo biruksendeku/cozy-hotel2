@@ -67,8 +67,8 @@ app.use("/auth", authLimiter);
 app.use("/api", apiLimiter);
 app.use("/", authRoutes(passport));
 app.use("/", apiRoutes());
-app.use("/", isLoggedIn, isAdmin, adminRoutes());
 app.use("/", isLoggedIn, foodRoutes());
+app.use("/", isLoggedIn, isAdmin, adminRoutes());
 
 app.use((req, res, next) => {
   next(new NotFoundError("Route not found"));
