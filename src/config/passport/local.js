@@ -17,6 +17,7 @@ module.exports = function configurePassport(passport) {
             req.flash("error", "Missing Credentials");
             return done(null, false);
           }
+          email = email.toLocaleLowerCase();
           const user = await User.findOne({ email });
           if (!user) {
             req.flash("error", "Email not registered");
@@ -26,8 +27,7 @@ module.exports = function configurePassport(passport) {
             const authProviders = Array.isArray(user.authProvider)
               ? user.authProvider
               : [];
-            const lastUsedProviderRaw =
-              authProviders[authProviders.length - 1];
+            const lastUsedProviderRaw = authProviders[authProviders.length - 1];
             const lastUsedProvider =
               typeof lastUsedProviderRaw === "string"
                 ? lastUsedProviderRaw.trim()
