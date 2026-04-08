@@ -20,6 +20,7 @@ module.exports = function foodRoutes() {
     foodController.updateCart,
   );
   router.post("/remove-from-cart/:id", foodController.removeFromCart);
+  router.get("/cart/count", foodController.getCartCount);
   router.post("/checkout", foodController.checkout);
   router.get("/search-foods", foodController.searchFoods);
   router.get("/user-guide", foodController.renderUserGuide);

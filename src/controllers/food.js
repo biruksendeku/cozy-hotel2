@@ -130,6 +130,14 @@ function removeFromCart(req, res, next) {
   }
 }
 
+function getCartCount(req, res, next) {
+  try {
+    res.json({ count: req.session.cart.length });
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function checkout(req, res, next) {
   try {
     const cart = req.session.cart || [];
@@ -180,6 +188,7 @@ module.exports = {
   renderCart,
   updateCart,
   removeFromCart,
+  getCartCount,
   checkout,
   searchFoods,
   renderUserGuide,
