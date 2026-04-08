@@ -28,13 +28,14 @@ The command grants that account admin privileges and exits; it does not create a
 
 ## Environment variables
 
-The application loads settings from `.env`. Use the exact names below; in particular, the MongoDB setting is `MONGODB_URI` (not `MONGO_URI`).
+The application loads settings from `.env`. Startup validates required settings and exits with a list of missing variables. Required at startup are `MONGODB_URI`, `SESSION_SECRET_KEY`, the Cloudinary and Google OAuth settings, `EMAIL_USER`, `EMAIL_PASS`, `BASE_URL`, and a positive integer `MAX_ITEM_QUANTITY`. Use the exact names below; in particular, the MongoDB setting is `MONGODB_URI` (not `MONGO_URI`).
 
 | Variable                | Purpose                                                                                                             |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `NODE_ENV`              | Runtime environment. Set to `production` when deployed.                                                             |
 | `PORT`                  | HTTP port; defaults to `3000` if unset.                                                                             |
 | `ADMIN_EMAIL`           | Existing account email to promote when running `npm run seed:admin`.                                                |
+| `MAX_ITEM_QUANTITY`     | Positive integer limit for each food item in a cart.                                                                |
 | `MONGODB_URI`           | MongoDB connection string used by the app and session store.                                                        |
 | `SESSION_SECRET_KEY`    | Secret used to sign session cookies. Set a long, random value and keep it private.                                  |
 | `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name used for image uploads.                                                                       |
@@ -54,7 +55,7 @@ The application loads settings from `.env`. Use the exact names below; in partic
 | `CHAPA_SECRET_KEY`      | Present in the example file but not currently read by the application.                                              |
 | `CHAPA_URL`             | Present in the example file but not currently read by the application.                                              |
 
-OAuth settings are needed only if using that provider. Never commit real credentials or secret values to the repository.
+Google OAuth settings are required while Google sign-in is enabled. Never commit real credentials or secret values to the repository.
 
 ## Application structure
 
