@@ -10,6 +10,7 @@ const authRoutes = require("./routes/auth");
 const apiRoutes = require("./routes/api");
 const adminRoutes = require("./routes/admin");
 const foodRoutes = require("./routes/food");
+const serviceRoutes = require("./routes/service");
 const sessionMiddleware = require("./middlewares/session");
 const { authLimiter, apiLimiter } = require("./middlewares/limiters");
 const { isAdmin, isLoggedIn } = require("./middlewares/auth");
@@ -68,6 +69,7 @@ app.use("/api", apiLimiter);
 app.use("/", authRoutes(passport));
 app.use("/", apiRoutes());
 app.use("/", isLoggedIn, foodRoutes());
+app.use("/", isLoggedIn, serviceRoutes);
 app.use("/", isLoggedIn, isAdmin, adminRoutes());
 
 app.use((req, res, next) => {
