@@ -33,8 +33,8 @@ module.exports = function authRoutes(passport) {
         .trim()
         .notEmpty()
         .withMessage("Confirmation password required")
-        .isLength({ min: 6 })
-        .withMessage("Password must be at least 6 characters long"),
+        .custom((v) => v === req.body.password)
+        .withMessage("Passwords do not match"),
     ],
     authController.signup,
   );

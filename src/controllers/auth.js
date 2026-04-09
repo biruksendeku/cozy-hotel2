@@ -23,6 +23,7 @@ async function signup(req, res, next) {
       req.flash("error", "Missing Credentials");
       return res.redirect("/auth/signup");
     }
+    
 
     const normalizedEmail = email.toLowerCase();
     const existingUser = await User.findOne({ email: normalizedEmail });
