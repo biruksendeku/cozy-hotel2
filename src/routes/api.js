@@ -34,7 +34,7 @@ module.exports = function apiRoutes() {
 
   router.get("/api/request/reset/password", apiController.renderPasswordReset);
   router.post(
-    "/api/request/reset/approve/password",
+    "/api/request/reset/password",
     emailLimiter,
     [
       body("email")
