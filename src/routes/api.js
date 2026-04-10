@@ -22,6 +22,12 @@ module.exports = function apiRoutes() {
         .isEmail()
         .normalizeEmail()
         .withMessage("Invalid email address"),
+      body("password")
+        .trim()
+        .notEmpty()
+        .withMessage("Password field required")
+        .isLength({ min: 6 })
+        .withMessage("Password must be at least 6 characters long"),
     ],
     apiController.resendVerification,
   );
@@ -30,6 +36,14 @@ module.exports = function apiRoutes() {
   router.post(
     "/api/request/reset/approve/password",
     emailLimiter,
+    [
+      body("email")
+        .notEmpty()
+        .withMessage("Email field required")
+        .isEmail()
+        .normalizeEmail()
+        .withMessage("Invalid email address"),
+    ],
     apiController.requestPasswordReset,
   );
   router.get(
