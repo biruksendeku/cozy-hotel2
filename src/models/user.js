@@ -50,9 +50,9 @@ const userSchema = new mongoose.Schema(
     },
     googleId: String,
     verificationToken: String,
-    verificationDate: Date,
+    verificationExpires: Date,
     resetToken: String,
-    resetDate: Date,
+    resetExpires: Date,
     verifiedAt: {
       type: Date,
       default: null,
