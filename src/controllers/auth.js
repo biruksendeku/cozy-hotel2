@@ -23,7 +23,6 @@ async function signup(req, res, next) {
       req.flash("error", "Missing Credentials");
       return res.redirect("/auth/signup");
     }
-    
 
     const normalizedEmail = email.toLowerCase();
     const existingUser = await User.findOne({ email: normalizedEmail });
@@ -44,7 +43,7 @@ async function signup(req, res, next) {
 
     await user.save();
     await sendVerificationEmail(normalizedEmail, verificationToken);
-    res.status(201).send("<h2>Verification email sent, check your email.</h2>");
+    res.render("verificationSuccess");
   } catch (err) {
     next(err);
   }
