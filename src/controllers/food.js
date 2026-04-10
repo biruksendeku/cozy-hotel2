@@ -36,7 +36,6 @@ async function addToCart(req, res, next) {
 
     const food = await Food.findById(id);
     if (!food) {
-      return res.json({ success: false, message: "Out of stock" });
       throw new NotFoundError("Item");
     }
 

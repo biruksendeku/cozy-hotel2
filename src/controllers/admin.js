@@ -624,7 +624,7 @@ async function updateFood(req, res, next) {
     if (deleteResult.result === "ok") {
       console.log(`The previous image of food item: ${food.name} is Deleted!`);
     } else {
-      console.log(
+      console.error(
         `Failed to Delete the image of food item: ${food.name}, Manually Delete it on cluodinary`,
       );
     }
