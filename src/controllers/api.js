@@ -15,7 +15,7 @@ async function verifyEmail(req, res, next) {
   try {
     const user = await User.findOne({
       verificationToken: hashToken(req.params.token),
-      verificationDate: { $gt: Date.now() },
+      verificationExpires: { $gt: Date.now() },
     });
     if (!user) {
       return res.render("resend");
@@ -25,7 +25,7 @@ async function verifyEmail(req, res, next) {
     }
 
     user.verificationToken = undefined;
-    user.verificationDate = undefined;
+    user.verificationExpires = undefined;
     user.isVerified = true;
     user.verifiedAt = new Date();
     user.authProvider.push("local");
@@ -70,7 +70,7 @@ async function resendVerification(req, res, next) {
 
     const verificationToken = crypto.randomBytes(32).toString("hex");
     user.verificationToken = hashToken(verificationToken);
-    user.verificationDate = Date.now() + 24 * 60 * 60 * 1000;
+    user.verificationExpires = Date.now() + 24 * 60 * 60 * 1000;
     await user.save();
     await sendVerificationEmail(email, verificationToken);
     res
@@ -116,7 +116,7 @@ async function requestPasswordReset(req, res, next) {
 
     const resetToken = crypto.randomBytes(32).toString("hex");
     user.resetToken = hashToken(resetToken);
-    user.resetDate = Date.now() + 24 * 60 * 60 * 1000;
+    user.resetExpires = Date.now() + 24 * 60 * 60 * 1000;
     user.newPassword = await bcrypt.hash(newPassword, 10);
     await user.save();
     await resetApprovalEmail(email, resetToken);
@@ -132,7 +132,7 @@ async function approvePasswordReset(req, res, next) {
   try {
     const user = await User.findOne({
       resetToken: hashToken(req.params.token),
-      resetDate: { $gt: Date.now() },
+      resetExpires: { $gt: Date.now() },
     });
     if (!user) {
       req.flash(
@@ -149,7 +149,7 @@ async function approvePasswordReset(req, res, next) {
     user.password = user.newPassword;
     user.newPassword = null;
     user.resetToken = undefined;
-    user.resetDate = undefined;
+    user.resetExpires = undefined;
     await user.save();
     await resetSuccessfulEmail(user.email);
     res.redirect("/auth/login");

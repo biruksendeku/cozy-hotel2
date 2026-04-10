@@ -37,7 +37,7 @@ async function signup(req, res, next) {
       email: normalizedEmail,
       password: await bcrypt.hash(password, 10),
       verificationToken: hashToken(verificationToken),
-      verificationDate: Date.now() + 24 * 60 * 60 * 1000,
+      verificationExpires: Date.now() + 24 * 60 * 60 * 1000,
       isVerified: false,
     });
 
