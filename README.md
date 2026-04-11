@@ -28,7 +28,7 @@ The command grants that account admin privileges and exits; it does not create a
 
 ## Environment variables
 
-The application loads settings from `.env`. Startup validates required settings and exits with a list of missing variables. Required at startup are `MONGODB_URI`, `SESSION_SECRET_KEY`, the Cloudinary and Google OAuth settings, `EMAIL_USER`, `EMAIL_PASS`, `BASE_URL`, and a positive integer `MAX_ITEM_QUANTITY`. Use the exact names below; in particular, the MongoDB setting is `MONGODB_URI` (not `MONGO_URI`).
+The application loads settings from `.env`. Startup validates required settings and exits with a list of missing variables. Required at startup are `MONGODB_URI`, `SESSION_SECRET_KEY`, the Cloudinary and Google OAuth settings, `EMAIL_USER`, `EMAIL_PASS` - the gmail app password, not the password of your email, `BASE_URL`, and a positive integer `MAX_ITEM_QUANTITY`. Use the exact names below; in particular, the MongoDB setting is `MONGODB_URI` (not `MONGO_URI`).
 
 | Variable                | Purpose                                                                                                             |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
