@@ -1,13 +1,5 @@
-const nodemailer = require("nodemailer");
-const { EMAIL_USER, EMAIL_PASS, BASE_URL } = process.env;
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: EMAIL_USER,
-    pass: EMAIL_PASS,
-  },
-});
+const transporter = require("../config/email");
+const { EMAIL_USER, BASE_URL } = process.env;
 
 async function sendVerificationEmail(email, token) {
   const verificationUrl = `${BASE_URL}/api/verify/email/${token}`;
