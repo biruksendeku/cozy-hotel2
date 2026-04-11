@@ -12,7 +12,7 @@ module.exports = function configurePassportGoogle(passport) {
         clientSecret: GOOGLE_CLIENT_SECRET,
         callbackURL: GOOGLE_CALLBACK_URL,
         passReqToCallback: true,
-        profileFields: ["email", "displayName", "id", "avatar"],
+        scope: ["email", "displayName", "id", "avatar"],
       },
       async (req, accessToken, refreshToken, profile, done) => {
         try {
