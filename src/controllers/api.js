@@ -8,11 +8,12 @@ const {
   resetApprovalEmail,
   resetSuccessfulEmail,
 } = require("./email");
+const hashToken = require("../utils/hashToken");
 
 async function verifyEmail(req, res, next) {
   try {
     const user = await User.findOne({
-      verificationToken: req.params.token,
+      verificationToken: hashToken(req.params.token),
       verificationDate: { $gt: Date.now() },
     });
     if (!user) {
@@ -67,7 +68,7 @@ async function resendVerification(req, res, next) {
     }
 
     const verificationToken = crypto.randomBytes(32).toString("hex");
-    user.verificationToken = verificationToken;
+    user.verificationToken = hashToken(verificationToken);
     user.verificationDate = Date.now() + 24 * 60 * 60 * 1000;
     await user.save();
     await sendVerificationEmail(email, verificationToken);
@@ -106,7 +107,7 @@ async function requestPasswordReset(req, res, next) {
     }
 
     const resetToken = crypto.randomBytes(32).toString("hex");
-    user.resetToken = resetToken;
+    user.resetToken = hashToken(resetToken);
     user.resetDate = Date.now() + 24 * 60 * 60 * 1000;
     user.newPassword = await bcrypt.hash(newPassword, 10);
     await user.save();
@@ -122,7 +123,7 @@ async function requestPasswordReset(req, res, next) {
 async function approvePasswordReset(req, res, next) {
   try {
     const user = await User.findOne({
-      resetToken: req.params.token,
+      resetToken: hashToken(req.params.token),
       resetDate: { $gt: Date.now() },
     });
     if (!user) {

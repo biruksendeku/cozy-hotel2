@@ -4,6 +4,7 @@ const { validationResult } = require("express-validator");
 
 const { sendVerificationEmail } = require("./email");
 const User = require("../models/user");
+const hashToken = require("../utils/hashToken");
 
 function renderSignup(req, res) {
   res.render("signup");
@@ -35,7 +36,7 @@ async function signup(req, res, next) {
       name,
       email: normalizedEmail,
       password: await bcrypt.hash(password, 10),
-      verificationToken,
+      verificationToken: hashToken(verificationToken),
       verificationDate: Date.now() + 24 * 60 * 60 * 1000,
       isVerified: false,
     });
